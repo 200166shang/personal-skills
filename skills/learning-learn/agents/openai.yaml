@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning: Learn"
+  short_description: "Understand questions and preserve useful explanations"
+  default_prompt: "Use $learning-learn to help me understand this question or readable source scope through normal high-quality conversation, preserving useful explanations in a lightweight Learning Thread when I am using a durable workspace."
+policy:
+  allow_implicit_invocation: false
