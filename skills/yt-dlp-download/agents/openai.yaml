@@ -1,0 +1,5 @@
+interface:
+  display_name: "yt-dlp Download"
+  short_description: "Download authorized web video, audio, and subtitles"
+  default_prompt: "Download the requested authorized YouTube or Bilibili media with yt-dlp."
+

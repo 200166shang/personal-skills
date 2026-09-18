@@ -1,0 +1,49 @@
+#!/bin/sh
+set -eu
+
+skill_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+runtime="$skill_root/runtime"
+lock="$runtime/.setup-lock"
+marker="$runtime/.setup-complete"
+
+if ! command -v uv >/dev/null 2>&1; then
+  echo "uv is required" >&2
+  exit 2
+fi
+if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+  echo "ffmpeg and ffprobe are required; install FFmpeg first" >&2
+  exit 2
+fi
+
+if [ -f "$marker" ] && [ -x "$runtime/.venv/bin/yt-dlp-download" ]; then
+  if "$skill_root/scripts/doctor"; then
+    exit 0
+  fi
+fi
+
+if ! mkdir "$lock" 2>/dev/null; then
+  echo "Another process is preparing the runtime; waiting..." >&2
+  waited=0
+  while [ -d "$lock" ] && [ "$waited" -lt 900 ]; do
+    sleep 1
+    waited=$((waited + 1))
+  done
+  if [ -d "$lock" ]; then
+    echo "Timed out waiting for runtime setup" >&2
+    exit 4
+  fi
+  "$skill_root/scripts/doctor"
+  exit 0
+fi
+
+cleanup() {
+  rmdir "$lock" 2>/dev/null || true
+}
+trap cleanup EXIT HUP INT TERM
+rm -f "$marker"
+
+uv sync --locked --project "$runtime"
+"$skill_root/scripts/doctor" >/dev/null
+printf 'ready\n' > "$marker"
+printf '{"ok":true,"status":"ready","runtime":"%s"}\n' "$runtime"
+
