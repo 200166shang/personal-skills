@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning: Review"
+  short_description: "Recall a saved explanation before seeing it"
+  default_prompt: "Use $learning-review to quiz me on an explanation I have already studied, then compare my answer with the saved material."
+policy:
+  allow_implicit_invocation: false
