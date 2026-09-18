@@ -1,0 +1,38 @@
+{
+  "skill_name": "local-whisper",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "在 Apple Silicon Mac 上离线转写一段中文音频，自动识别语言，导出 TXT、SRT、VTT、JSON，并包含词级时间戳。",
+      "expected_output": "格式齐全、时间戳有效、输出目录干净且使用可复用脚本。",
+      "files": [],
+      "expectations": [
+        "输出 TXT、SRT、VTT、JSON。",
+        "JSON 包含语言元数据、segment 与 word 时间戳。",
+        "输出目录不包含虚拟环境、包缓存或模型缓存。"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "把英语音频制作成简体中文字幕，同时保留英文原文和完全相同的时间轴。",
+      "expected_output": "使用 ASR 后本地文本翻译，记录翻译模型并保持 cue 一一对应。",
+      "files": [],
+      "expectations": [
+        "不把 Whisper translate 误当英译中。",
+        "中英文字幕时间轴完全一致。",
+        "翻译产物记录真实本地翻译后端与模型。"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "处理英中混合音频并输出带逐段语言来源的 JSON 与 SRT。",
+      "expected_output": "使用非硬编码的混合语言策略并说明语言标签的证据来源。",
+      "files": [],
+      "expectations": [
+        "避免用一个全局语言标签强制整段音频。",
+        "每个 segment 包含 language 与 language_source。",
+        "输出目录没有临时切窗音频或运行时缓存。"
+      ]
+    }
+  ]
+}
