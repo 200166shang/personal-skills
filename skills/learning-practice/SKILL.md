@@ -1,85 +1,69 @@
 ---
 name: learning-practice
-description: "Turn a learned idea into one small runnable exercise, let the learner attempt it first, and preserve useful attempts without requiring a learning backend."
+description: "Practice an existing learning workspace by applying saved understanding to one concrete task at a time."
+disable-model-invocation: true
 ---
 
 # Learning: Practice
 
-Help the learner implement one small mechanism they are currently trying to
-understand. Keep the exercise subordinate to learning: it should expose the
-mechanism clearly, not grow into a realistic application or a hidden assessment.
+Use this Skill only for explicit practice over an existing multi-Root learning workspace.
 
-## Choose the exercise
+Practice consumes saved learning; it does not own learning state. Do not create a thread,
+change its graph, or record practice status merely because an exercise happened.
 
-Start from the learner's stated question, an explanation they provide, or the
-current Question note in a `learning-learn` thread. If none of those identify the
-mechanism, ask one focused question before creating files.
+## Resolve
 
-Define:
+- Use the workspace and Root supplied or clearly identified by the learner.
+- If no valid `root-compass.yaml` and activated Root thread exist, say that durable practice material is unavailable
+  and stop. Do not invent questions or create a thread.
+- If the learner names a Root-qualified Question, resolve it through that Root's
+  `thread.yaml`. If they name a local `qNNN`, require a clear Root context.
+- Otherwise use the active Root and its `current`; if no Root is active, ask which
+  explored Root to practice.
+- Read the selected Question note first. Read only the minimum parent notes needed
+  to design a coherent application.
 
-- the single mechanism being practised;
-- what the learner will implement or change;
-- a concrete completion check;
-- any simulation boundary that makes the exercise differ from a real system.
+## Apply before reveal
 
-Prefer an exercise that can be completed in one short sitting. Do not turn it into
-a full project, add unrelated architecture, or claim that simulated behavior proves
-production, timing, hardware, network, or concurrency reliability.
+Create one concrete task that requires using the saved mechanism rather than reciting
+it. Match the task to the material, for example:
 
-## Prepare an isolated workspace
+- predict what a code path will do;
+- trace a value through several stages;
+- fill in or repair a small code fragment;
+- explain why a proposed implementation is wrong;
+- apply a concept to a new numeric example;
+- choose between two designs and justify the mechanism-level difference;
+- reconstruct an end-to-end flow from a new starting condition.
 
-Use a new, clearly scoped directory unless the learner explicitly asks to work in
-an existing project. Never alter the source project merely to create an exercise.
-Keep example code, the editable task, checks, and any reference solution separate.
-The editable task must remain incomplete: the learner writes first.
+Prefer a concrete application over generic multiple choice when the material allows it.
+Do not reveal the solution before the learner has a chance to attempt the task. If the
+learner asks for a hint, give the smallest hint that preserves useful effort.
 
-Do not install dependencies, contact external services, or access devices without
-the authorization normally required for those effects. Prefer dependencies already
-available in the environment and deterministic local checks.
+## Evaluate
 
-Before inviting an attempt, verify that:
+Compare the learner's attempt with the durable note and any relevant source evidence.
+Explain the mechanism behind the result, not just whether it is correct.
 
-- the starter files are coherent and do not contain the answer;
-- the completion check fails for the intended missing behavior rather than for
-  broken scaffolding;
-- any example demonstrates the idea without solving the editable task;
-- a reference solution, if useful, is outside the learner's task directory and is
-  not revealed prematurely.
+- If the attempt works, explain why the reasoning or implementation works.
+- If it is incomplete, identify the smallest missing connection.
+- If it is incorrect, identify the broken connection and repair that point without
+  dumping unrelated solution detail.
+- When useful, offer one smaller follow-up or focused retry.
 
-## Coach the attempt
+## Stop
 
-Let the learner attempt the task before providing a solution. Answer ordinary
-clarifying questions directly. Give hints only when requested or when the learner
-explicitly asks for help, increasing specificity gradually:
+Stop after the learner's requested practice scope unless they explicitly ask for more.
+Do not silently create an exercise backlog, score, curriculum, or schedule.
 
-1. point to the relevant concept or observation;
-2. identify the local decision or code area;
-3. outline the next implementation step;
-4. show a solution only when requested.
+Ordinary practice is read-only with respect to the learning workspace:
 
-When execution is requested, run only the scoped local checks needed for the
-exercise. Report observed results as observations; do not invent passes, timing, or
-environment behavior. Preserve learner edits and do not replace their approach with
-the reference answer merely because it differs.
+- do not change Root status or a Root's `current`;
+- do not add practice nodes or parent links;
+- do not store scores, pass/fail, mastery, streaks, attempt logs, or practice state in
+  `thread.yaml`;
+- do not rewrite Question notes simply to record an exercise result.
 
-## Finish and optionally record
-
-Explain what the attempt demonstrates about the mechanism and distinguish remaining
-issues in the exercise from limitations of its simulation.
-
-Classify the outcome only when useful:
-
-- completed independently;
-- completed with hints;
-- understood from the example or solution but not completed;
-- incomplete, with the next concrete step.
-
-If the learner is using a durable learning workspace or asks to save the practice,
-write a short `practice.md` inside the exercise directory or another location they
-choose. Preserve the task, the learner's meaningful attempts, hints actually used,
-observed checks, outcome, and next step. Do not copy the full conversation or every
-keystroke.
-
-Practice does not silently change `learning-learn` graph position, relationships, or
-Question notes. If the exercise reveals that an explanation is wrong, report the
-correction and update learning material only when the learner asks.
+If practice reveals a likely misconception or factual error in a saved explanation,
+report it clearly and recommend correcting it through `learning-learn`; do not silently
+mutate Learn-owned artifacts during ordinary practice.

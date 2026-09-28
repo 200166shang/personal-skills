@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning: Router"
+  short_description: "Choose the right explicit Learning workflow"
+  default_prompt: "Use $learning to tell me which explicit Learning workflow best matches what I want to do next."
+policy:
+  allow_implicit_invocation: false

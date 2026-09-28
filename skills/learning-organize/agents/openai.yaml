@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning: Organize"
+  short_description: "Snapshot, refresh, and execute a Topic Compass"
+  default_prompt: "Use $learning-organize to snapshot my Question graph into a reviewable Topic Compass, refresh it from later Questions, and generate only approved Topics."
+policy:
+  allow_implicit_invocation: false

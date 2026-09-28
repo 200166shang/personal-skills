@@ -1,93 +1,65 @@
 ---
 name: learning-review
-description: "Run active recall from an existing explanation or Learning Thread, revealing the saved explanation only after the learner attempts an answer."
+description: "Review an existing learning workspace by reconstructing the important mechanism before seeing the saved explanation."
+disable-model-invocation: true
 ---
 
 # Learning: Review
 
-Run a short active-recall session against material the learner has already studied.
-The learner attempts recall before seeing the saved explanation. Review observes
-memory; it does not silently rewrite learning history or decide what the learner has
-mastered.
+Use this Skill only for explicit review of an existing multi-Root learning workspace.
 
-## Select review material
+Review consumes saved learning; it does not own learning state. Do not create a thread,
+change its graph, or record review status merely because review happened.
 
-Use one of these inputs:
+## Resolve
 
-- a question or explanation the learner supplies;
-- a Question note explicitly selected from a `learning-learn` thread;
-- a small set of existing Question notes from which the learner chooses.
+- Use the workspace and Root supplied or clearly identified by the learner.
+- If no valid `root-compass.yaml` and activated Root thread exist, say that durable review material is unavailable and
+  stop. Do not invent questions or create a thread.
+- If the learner names a Root-qualified Question, resolve it through that Root's
+  `thread.yaml`. If they name a local `qNNN`, require a clear Root context.
+- Otherwise use the active Root and its `current`; if no Root is active, ask which
+  explored Root to review.
+- Read the selected Question note first. Read only the minimum parent notes needed
+  to understand the mechanism being reviewed.
 
-When a thread is supplied, treat `thread.yaml` as routing metadata. Read the selected
-Question note only far enough to prepare the recall prompt and retain its path so the
-same saved explanation can be revealed later. Do not invent a past question,
-explanation, review history, or schedule when none exists.
+## Retrieve before reveal
 
-If the user asks for a general review without selecting an item, offer a small number
-of real candidates. Prefer the current question and older questions that have not
-been reviewed recently when reliable local review facts exist. Explain the reason
-briefly and let the learner choose or skip. Candidate selection itself records
-nothing.
+Ask the learner to reconstruct the important mechanism, causal connection, or
+concept-to-code relationship before showing the saved explanation.
 
-## Ask before revealing
+Prefer one meaningful prompt at a time. Do not quiz on wording, filenames, or trivia
+when the saved note supports a more important connection.
 
-Create one prompt that tests the important mechanism, connection, distinction, or
-application captured by the selected explanation. Avoid trivia and avoid merely
-asking the learner to repeat the title.
+Do not reveal the answer in the prompt. If the learner asks for a hint, give the
+smallest hint that preserves retrieval effort.
 
-Ask the prompt without showing or paraphrasing the saved answer. Do not reveal hidden
-parts of the note while the attempt is pending. If the learner asks for help, give at
-most one minimal hint at a time and remember the hints actually used.
+## Evaluate
 
-Accept an answer, an explicit non-answer, or a skip. Judge whether the learner
-reconstructed the important reasoning, not whether their wording matches the note.
-Distinguish:
+Compare the learner's answer with the durable note and any relevant source evidence.
+Judge the technical connection, not exact wording.
 
-- recalled: the central mechanism and relevant boundary are present;
-- partial: an important causal step, distinction, or condition is missing;
-- not recalled: the answer does not recover the central idea;
-- not scored: the learner skipped or did not answer.
+- If the reasoning is correct in equivalent language, say why it is correct.
+- If it is incomplete, identify the missing connection without treating the whole
+  answer as wrong.
+- If it is incorrect, name the broken connection and explain the correction clearly.
+- When useful, allow one focused retry after the repair.
 
-State that this is a conversational judgment when the evidence is borderline. Let
-the learner correct the evaluation.
+Do not infer permanent mastery from one successful response.
 
-## Reveal and teach
+## Stop
 
-After the attempt or skip, reveal the relevant saved explanation and compare it with
-the learner's answer. Focus on the missing or distorted connection rather than
-re-teaching everything. General knowledge may clarify the material, but distinguish
-it from what the saved note actually said when that difference matters.
+Stop after the learner's requested review scope. Do not silently generate a curriculum,
+review queue, schedule, or additional quiz set.
 
-If recall exposes a factual error or ambiguity in the explanation, identify it as a
-learning-note correction. Do not score the learner against a claim that appears
-wrong. Update the Question note only when the learner asks or when the current request
-already includes maintaining the durable learning workspace.
+Ordinary review is read-only with respect to the learning workspace:
 
-## Optional lightweight record
+- do not change Root status or a Root's `current`;
+- do not add, remove, or rewrite nodes or parent links;
+- do not store scores, mastery, due dates, intervals, streaks, review status, or attempt
+  history in `thread.yaml`;
+- do not rewrite Question notes simply to record a review result.
 
-Do not require a backend, card engine, scheduler, delivery service, or external
-account. When the learner asks to save reviews or the supplied learning workspace
-already has a review log, append one compact local record after the outcome is known.
-Use `reviews.yaml` beside `thread.yaml` unless the workspace already defines another
-location.
-
-Keep each event limited to:
-
-```yaml
-- question: q001
-  reviewed_at: 2026-09-18T12:00:00+08:00
-  prompt: <prompt actually asked>
-  answer: <learner's actual answer or null>
-  hints: []
-  evaluation: recalled | partial | not_recalled | not_scored
-  correction: <learner correction or null>
-```
-
-Use an ISO 8601 timestamp with the actual local offset. Preserve the learner's answer
-and any correction in their own words; do not fabricate a concise answer for them.
-Append exactly one event for one completed attempt or skip, and do not record candidate
-suggestions.
-
-Review never changes `thread.yaml`, the current learning question, question
-relationships, or understanding feedback. Scheduling, reminders, flash-card
-generation, and delivery belong to separate explicitly requested workflows.
+If review reveals a likely factual error in a saved explanation, report it clearly and
+recommend correcting it through `learning-learn`; do not silently mutate Learn-owned
+artifacts during ordinary review.
