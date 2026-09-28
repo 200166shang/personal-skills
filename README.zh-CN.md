@@ -20,11 +20,39 @@
 - **可阅读**：Skill 的行为应该容易检查、理解和修改。
 - **轻量化**：在真实需求出现之前，不提前引入复杂的基础设施。
 
-## 当前状态
+## Skills
 
-这个仓库目前处于初始化阶段。
+本仓库是个人 Learning skills 的唯一维护来源：
 
-Skill 的目录结构、编写规范、安装方式和管理流程暂时不会提前固定，后续会随着真实 Skill 的加入逐步确定。
+- `learning`：根据意图选择学习工作流。
+- `learning-learn`：讲解问题并保存持久化学习记录。
+- `learning-review`：通过主动回忆复习已有内容。
+- `learning-practice`：用小型练习应用已学内容。
+- `learning-resources`：整理外部学习资料。
+- `learning-organize`：把已探索的问题组织成主题文章。
+- `learning-transcript`：将 ASR 文件整理为忠实讲稿。
+
+在本仓库维护完整 skill 目录，包括可选的 `agents/` 元数据和 `references/`。不在其他项目或本机安装目录维护另一份副本。
+
+## 安装
+
+在本地仓库运行：
+
+```bash
+node bin/install.mjs
+```
+
+如需用仓库版本替换已安装的同名 skill，并清除源目录中已不存在的旧文件：
+
+```bash
+node bin/install.mjs --force
+```
+
+这些改动合并到 `main` 后，也可以从 GitHub 直接安装：
+
+```bash
+npx --yes github:200166shang/personal-skills
+```
 
 ## License
 

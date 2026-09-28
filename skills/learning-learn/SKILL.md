@@ -1,6 +1,6 @@
 ---
 name: learning-learn
-description: "Learn through normal high-quality conversation, preserve useful explanations, and record the lightweight question graph needed to resume later."
+description: "Learn through Root-guided recursive questions, preserve useful explanations, and resume any explored learning route."
 disable-model-invocation: true
 ---
 
@@ -26,12 +26,19 @@ workspace must be created, updated, or resumed.
   or implementation sites, and that investigation would materially clutter the main
   teaching context, read [the source-exploration branch](references/source-exploration.md).
   Keep focused source questions in the main context.
-- If the learner gives only a broad module or body of material and does not yet have a
-  useful question, inspect it cheaply and recommend one useful connecting question.
-  Offer alternatives only when they represent genuinely different learning routes.
-- If an existing `thread.yaml` is supplied or clearly belongs to the current learning
-  workspace, use it only to recover the current question and the minimum useful prior
-  context. Read the current note first and follow parent relations only as far as the
+- If the learner gives a broad unfamiliar module and no useful question, inspect it
+  cheaply and create or present a Root Compass with 3–5 candidate Root Questions.
+  Prefer distinct views such as end-to-end flow, core collaborators, data flow,
+  concurrency, and external integration. Recommend the end-to-end Root first when it
+  is useful. Do not turn the Compass into a curriculum or pre-generate child Questions.
+- If the learner chooses a Root, activate it. Its Root Question becomes `q001` in an
+  independent Root directory. Unselected candidates remain in `root-compass.yaml`
+  without a Question directory.
+- If the learner already asks a concrete question, answer immediately. When durable
+  recording is requested and no Root exists, use that question as the first active
+  Root instead of forcing a preliminary Compass review.
+- If an existing Root workspace is supplied, resolve the named Root or the active Root,
+  then read its `thread.yaml` and current note. Follow parent links only as far as the
   present question requires.
 
 ## Teach
@@ -71,10 +78,15 @@ In particular:
   matters;
 - say when evidence is uncertain or conflicting rather than manufacturing certainty.
 
-Do not classify the learner's confusion into workflow states. Do not require a
-Blocking Gap, Return Point, Active Path, Completion Check, or forced return to an
-ancestor question. A follow-up may deepen the current question, apply it, move to a
-related question, or return anywhere the learner chooses.
+Do not classify understanding into mastery or completion states. A follow-up may push
+deeper, apply an idea, move sideways, or return to any earlier Question. `current` and
+`parent` only preserve navigation; they do not force the next teaching action.
+
+The learner may begin with one broad Root Question and recurse through follow-ups for
+as long as the exploration remains useful. Every genuinely pursued follow-up remains an
+ordinary Question in the same graph. Do not split Questions into “exploration” and
+“Topic-local” types, renumber them under Topics, or force the learner to stop exploring
+after a Topic Compass exists.
 
 Teaching for the turn is complete when the learner has received the answer that would
 have been useful in an ordinary unconstrained ChatGPT conversation and the explanation
@@ -90,31 +102,33 @@ Persistence must not rewrite a rich explanation into a short canonical summary. 
 learning note should preserve the useful explanatory substance of the answer, with
 only small edits needed to make it independently readable.
 
-Record only questions the learner actually pursued. Infer only the smallest useful
-relationship to prior pursued questions. The initial relation vocabulary is:
-
-- `deepens`: the new question digs further into understanding an earlier question;
-- `applies`: the new question applies earlier understanding to code, an example, or a
-  concrete situation;
-- `related`: the new question arose from the learning context but is not simply a
-  deeper explanation or application.
+Record only Questions the learner actually pursued. Questions are local to one Root;
+similar Questions under different Roots are valid because they preserve different
+learning contexts. Use the immediate conversational Question as `parent` when clear.
+Do not add cross-Root canonicalization, duplicate detection, or `same_as` metadata.
 
 Do not invent a curriculum, prerequisite tree, mastery state, causal ontology, or
 future questions.
 
+An existing Topic Compass is downstream organization, not a recording boundary. New
+Questions continue to receive the next local `qNNN` within their Root and stable IDs
+such as `r003-q007`. Do not attach them directly to Topics or update the Compass during
+Learn; `$learning-organize refresh` handles that explicit projection step later.
+
 Recording for the turn is complete when the note preserves the useful explanation and
-`thread.yaml` can identify the root question, current question, question notes, and
-recorded relations without parsing prose.
+the Root-local `thread.yaml` can identify the current Question, its parent chain, and
+Question notes without parsing prose.
 
 ## Resume
 
-Treat `thread.yaml` as routing metadata, not a teaching plan.
+Treat each Root-local `thread.yaml` as routing metadata, not a teaching plan.
 
-1. Find `current`.
-2. Read that question's note.
-3. If the present request needs more context, follow recorded relations to the minimum
+1. Resolve the requested Root or the active Root from `root-compass.yaml`.
+2. Find `current` in that Root's `thread.yaml`.
+3. Read that Question's note.
+4. If the present request needs more context, follow parent links to the minimum
    relevant earlier notes.
-4. Continue the conversation naturally from the learner's new message.
+5. Continue the conversation naturally from the learner's new message.
 
 Never resume by reconstructing a workflow state machine. The learner decides whether
 to continue deeper, branch, apply an idea, or return to an earlier question.
@@ -128,6 +142,6 @@ Keep review, spaced repetition, Memory Targets, Concept promotion, viewers, and
 Obsidian rendering outside this core skill. They may consume the saved notes and graph
 through separate explicit workflows later.
 
-Do not maintain duplicate relationship state in Markdown. `thread.yaml` is the single
-source of truth for question relationships and current position; Markdown notes are
-for readable explanations.
+Do not maintain duplicate navigation state in Markdown. `root-compass.yaml` owns Root
+status; each Root's `thread.yaml` owns its Question navigation; Markdown notes are for
+readable explanations.

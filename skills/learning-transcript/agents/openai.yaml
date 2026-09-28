@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning: Transcript"
+  short_description: "Turn ASR transcripts into faithful lecture scripts"
+  default_prompt: "Use $learning-transcript to turn the transcript files in this directory into a faithful Markdown lecture script without adding new content."
+policy:
+  allow_implicit_invocation: false

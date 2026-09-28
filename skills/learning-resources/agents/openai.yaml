@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning: Resources"
+  short_description: "Find high-quality materials worth inspecting"
+  default_prompt: "Use $learning-resources to find and verify a small set of high-quality materials worth inspecting for this subject, Question, or Topic."
+policy:
+  allow_implicit_invocation: false

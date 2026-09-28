@@ -5,99 +5,125 @@ changed to make recording easier.
 
 ## Workspace shape
 
-Use one directory per Learning Thread:
+One learning workspace may contain several independent Root explorations:
 
 ```text
-<thread>/
-├── thread.yaml
-└── questions/
-    ├── q001.md
-    ├── q002.md
-    └── ...
+<workspace>/
+├── root-compass.yaml
+├── questions/
+│   ├── r001-end-to-end/
+│   │   ├── thread.yaml
+│   │   ├── q001.md
+│   │   └── q002.md
+│   └── r003-concurrency/
+│       ├── thread.yaml
+│       └── q001.md
+└── organized/
+    ├── compass.md
+    ├── compass.yaml
+    └── topics/
 ```
 
-`thread.yaml` is the single source of truth for routing and relationships. Question
-Markdown is the readable learning artifact. Do not duplicate graph state in notes.
+`root-compass.yaml` owns Root candidates and status. A Root directory exists only after
+activation. Each Root-local `thread.yaml` owns Question navigation for that Root.
+Question Markdown is the readable learning artifact.
 
-## Minimal schema
+For a legacy workspace with one top-level `thread.yaml` and flat `questions/`, migrate
+on the next durable mutation: create Root `r001`, move the thread and notes under one
+Root directory, qualify its IDs with `r001-`, and preserve titles, note content, order,
+and relationships as parent links where the immediate ancestry is unambiguous. Never
+maintain both layouts as writable state.
 
-Keep the schema intentionally small:
+## Root Compass
+
+Use this minimal schema:
 
 ```yaml
 version: 1
-
-thread:
-  title: <human-readable title>
-  root: q001
-  current: q003
-
-nodes:
-  q001:
-    title: <question in learner language>
-    file: questions/q001.md
-  q002:
-    title: <question in learner language>
-    file: questions/q002.md
-  q003:
-    title: <question in learner language>
-    file: questions/q003.md
-
-edges:
-  - from: q001
-    to: q002
-    type: deepens
-  - from: q002
-    to: q003
-    type: applies
+roots:
+  r001:
+    title: How does one request travel through the whole system?
+    status: explored
+    path: questions/r001-end-to-end
+  r002:
+    title: How do the core objects collaborate?
+    status: candidate
+  r003:
+    title: How does concurrency work in this system?
+    status: active
+    path: questions/r003-concurrency
 ```
 
-Required top-level keys are `version`, `thread`, `nodes`, and `edges`. Keep
-`version: 1`. `thread` contains only `title`, `root`, and `current`. Each node contains
-only `title` and `file`. Each edge contains only `from`, `to`, and `type`.
+Allowed status values are `candidate`, `active`, and `explored`. Keep at most one Root
+active. A candidate has no `path` and no directory. To activate a candidate, assign a
+stable path, create its directory and Root Question, mark the previously active Root
+`explored`, and mark the selected Root `active`. Never delete another Root's graph when
+switching.
 
-Do not add fields speculatively. In particular, do not add Active Path, Blocking Gap,
-Return Point, completion evidence, mastery, review state, source boundaries, generated
-prerequisites, tags, or graph ontology fields.
+When creating a Root Compass for a broad unfamiliar module, propose only 3–5 broad,
+chain-forming views. Do not create Question directories until the learner selects a
+Root. When the learner starts with a concrete durable question, it may directly become
+`r001` without first proposing unused candidates.
 
-## IDs
+## Root-local thread
 
-Use simple thread-local sequential IDs: `q001`, `q002`, and so on. IDs are stable after
-creation. A renamed or improved question title keeps its ID and file.
+Each activated Root uses:
 
-## Record a turn
+```yaml
+version: 1
+root:
+  id: r003
+  title: How does concurrency work in this system?
+current: r003-q003
+nodes:
+  r003-q001:
+    seq: 1
+    title: How does concurrency work in this system?
+    file: q001.md
+    parent: null
+    status: explored
+  r003-q002:
+    seq: 2
+    title: Why does TTS use a separate worker?
+    file: q002.md
+    parent: r003-q001
+    status: explored
+  r003-q003:
+    seq: 3
+    title: Can function execution block playback?
+    file: q003.md
+    parent: r003-q002
+    status: active
+```
 
-Record only a question the learner actually pursued and for which a useful explanation
-was produced.
+Required keys are `version`, `root`, `current`, and `nodes`. A node contains only
+`seq`, `title`, `file`, `parent`, and `status`. Question status is `active` or
+`explored`; exactly one node is active and equals `current`.
 
-For a new thread:
+File names and visible sequence numbers restart within every Root (`q001.md`,
+`q002.md`). Machine-stable Question IDs always include the Root (`r003-q001`). IDs and
+paths remain stable after creation.
 
-1. Create `q001` from the learner's actual question.
-2. Save the useful explanation to `questions/q001.md`.
-3. Set both `root` and `current` to `q001`.
-4. Start with an empty `edges` list.
+## Record and navigate
 
-For a later pursued question:
+For an activated Root, its Root Question is always local `q001`. Save each genuinely
+pursued later Question as the next local sequence. Use the current Question as parent
+when the follow-up arose from it; use another existing Question only when the learner
+explicitly returned there. Do not manufacture ancestry.
 
-1. Reuse an existing node when the learner is plainly continuing the same question
-   rather than creating a distinct question.
-2. Otherwise allocate the next sequential ID and save a new question note.
-3. Add at most one direct edge that best captures how the new question arose from a
-   previously pursued question. Prefer the immediate conversational parent when it is
-   clear. Do not manufacture ancestry when it is not clear.
-4. Use only `deepens`, `applies`, or `related`.
-5. Set `thread.current` to the question the learner is now pursuing.
+On a push to a new Question, mark the previous node explored, create the new active
+node, and update `current`. On an explicit return or pop, mark the old current explored,
+mark the selected existing node active, and update `current`; do not create a duplicate.
+Navigation never means the learner has mastered or completed the material.
 
-When the learner explicitly returns to an existing question, set `current` to that
-existing node instead of creating a duplicate node.
+Similar Questions in different Roots remain separate. The Question layer preserves why
+the learner reached each question in that view. Do not block a question because it
+resembles an earlier one and do not add cross-Root identity metadata. Topic organization
+is responsible for later semantic aggregation.
 
 ## Build a note for relearning
 
-A Question note is a reconstructed explanation optimized for **relearning**. It is not
-a chat transcript and not a terse knowledge summary. Conversation may discover ideas
-in a messy order; the note may reorganize them into the order that best rebuilds the
-understanding later.
-
-Use this minimum shape, without forcing any additional section template:
+Use the minimum note shape:
 
 ```markdown
 # <question>
@@ -105,72 +131,33 @@ Use this minimum shape, without forcing any additional section template:
 <a self-contained explanation organized for understanding this question again>
 ```
 
-Preserve **learning value, not wording**. When integrating or restructuring a note,
-retain the parts that made the idea understandable: important `why` reasoning, useful
-mental models, intermediate mechanism, connections to prior concepts, concrete
-examples or counterexamples, concept-to-code mappings, material caveats, and source
-references. Rewrite wording, reorder sections, merge repetition, and remove chat-only
-transitions when that makes the explanation better.
+Preserve learning value, not chat wording. Retain important why-reasoning, mental
+models, intermediate mechanisms, examples, caveats, concept-to-code mappings, and
+useful source locators. Compress repetition, not reasoning. Integrate later improvements
+into the same note when the learner is still pursuing the same Question.
 
-**Compress redundancy, not reasoning.** Do not turn a rich explanation into a list of
-correct conclusions by deleting the intermediate reasoning that lets the learner
-reconstruct why those conclusions follow.
+Let the question determine structure and length. Do not force template sections. For
+source-specific questions, distinguish evidence from general explanation and reconnect
+concepts to the relevant code or data. Markdown must not duplicate Root status,
+Question parent links, or current-position metadata.
 
-When later turns improve the same Question, integrate the new understanding into the
-existing note. Prefer local integration when the article remains coherent; restructure
-the whole note when accumulated additions, corrections, or changed understanding make
-a different explanatory order substantially clearer. Do not preserve conversation
-chronology merely because it happened first.
+## Topics and continued learning
 
-Let the question determine the shape of the note:
-
-- For a standalone concept, make the explanation self-contained. Explain the concept,
-  motivation, mechanism, useful example, distinctions, or boundaries only as they help
-  understanding; do not invent project context.
-- For a source- or project-specific question, anchor source-specific claims in the
-  supplied material and explicitly connect the general concept to the relevant code,
-  data, or project behavior. General knowledge may still be used to make the mechanism
-  understandable.
-- For an end-to-end system question, establish the overall mental model and organize
-  the stages in causal order, using concrete data or code where it helps the learner
-  see how one stage produces the next.
-
-These are quality guides, not mandatory Markdown sections. Do not manufacture
-`Background`, `Principle`, `Example`, `Source`, `Common mistakes`, or `Summary`
-sections when the question does not benefit from them. Let complexity determine the
-length and structure.
-
-## Sources
-
-When an explanation depends on supplied code, documentation, PDFs, or prepared notes,
-keep useful source locators close to the relevant prose in the Markdown note. Source
-metadata is explanatory evidence, not graph routing state, so it does not belong in
-`thread.yaml` version 1.
-
-General conceptual explanation does not require pretending it came from the supplied
-sources. Make the distinction clear when it matters.
-
-## Resume
-
-Read `thread.current` and its note first. If the new user message depends on earlier
-context, inspect only the relevant connected nodes needed to understand it. Do not
-parse Markdown to reconstruct relationships already represented in YAML.
-
-A graph is a projection of learning that already happened. Never use it to force the
-learner down a predetermined path.
+Topics are replaceable projections across one or many Roots. Learn never mutates
+`organized/`. After a Compass exists, continue appending Questions to the appropriate
+Root. Only explicit `$learning-organize refresh` compares those Questions with its
+snapshot.
 
 ## Determinism boundary
 
 Be deterministic about persistence:
 
 - valid minimal YAML;
-- stable node IDs;
-- existing nodes are not duplicated;
-- only the three relation values are used;
-- `current` points to an existing node;
-- every edge endpoint exists;
-- every node file exists;
-- Markdown contains no second copy of graph routing state.
+- one active Root at most and one active Question per activated Root;
+- stable Root-qualified IDs and Root-local sequence numbers;
+- every `current`, parent, path, and note file resolves;
+- candidate Roots have no directories;
+- Markdown contains no duplicate navigation state.
 
-Be flexible about teaching and note composition. The recorder may improve explanatory
-structure, but it must preserve the learning value that made the understanding useful.
+Be flexible about teaching and note composition. The graph records learning that
+already happened; it never prescribes a curriculum.

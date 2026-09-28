@@ -20,11 +20,40 @@ More complex projects with their own architecture, release cycle, or long-term r
 - **Readable** — the behavior of a skill should be easy to inspect and understand.
 - **Lightweight** — avoid unnecessary infrastructure until real usage requires it.
 
-## Status
+## Skills
 
-This repository is currently being initialized.
+The repository is the source of truth for the personal Learning skills:
 
-The detailed skill structure, conventions, installation workflow, and management rules will be added gradually as real skills are introduced.
+- `learning` — routes to an explicit learning workflow.
+- `learning-learn` — teaches and records durable learning.
+- `learning-review` — reviews saved understanding through active recall.
+- `learning-practice` — applies saved understanding in a small exercise.
+- `learning-resources` — curates external learning materials.
+- `learning-organize` — organizes pursued questions into topic articles.
+- `learning-transcript` — turns ASR files into faithful lecture scripts.
+
+Maintain these skills in this repository. Their complete directories, including any
+`agents/` metadata and `references/`, are managed as a unit.
+
+## Install
+
+From a local checkout, run:
+
+```bash
+node bin/install.mjs
+```
+
+To replace installed copies and remove files no longer present in this repository:
+
+```bash
+node bin/install.mjs --force
+```
+
+Once these changes are merged into `main`, the skills can also be installed directly from GitHub:
+
+```bash
+npx --yes github:200166shang/personal-skills
+```
 
 ## License
 
