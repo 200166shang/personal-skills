@@ -48,7 +48,7 @@ node bin/install.mjs
 node bin/install.mjs --force
 ```
 
-推送本仓库后，也可以从 GitHub 直接安装：
+这些改动合并到 `main` 后，也可以从 GitHub 直接安装：
 
 ```bash
 npx --yes github:200166shang/personal-skills

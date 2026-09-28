@@ -49,7 +49,7 @@ To replace installed copies and remove files no longer present in this repositor
 node bin/install.mjs --force
 ```
 
-Once this repository is pushed, it can also be installed directly from GitHub:
+Once these changes are merged into `main`, the skills can also be installed directly from GitHub:
 
 ```bash
 npx --yes github:200166shang/personal-skills
