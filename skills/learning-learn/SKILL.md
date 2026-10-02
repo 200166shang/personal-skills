@@ -63,6 +63,19 @@ matters: explain what the mechanism means, where it appears in the code, and why
 code implements the mechanism. Avoid both line-by-line paraphrase without the concept
 and detached theory that never returns to the code.
 
+When explaining behavior from source code, put the relevant real source in fenced code
+blocks in the teaching answer, then explain each excerpt beside it in execution or data-
+flow order. A file path and line number are useful locators, but are not a substitute
+for showing the code the learner needs to understand. For a cross-file path, include the
+important producer, handoff, and consumer excerpts, and connect them in prose (caller →
+message/state → receiver → callee). Use complete relevant functions when they are
+reasonably sized; otherwise include the smallest contiguous blocks that preserve the
+important conditions, arguments, and handoff. Do not paste entire large files or pad
+the answer with unrelated code. Keep source text faithful, label the language, and place
+a clickable file-and-line locator with or immediately after each excerpt. Never invent
+or silently rewrite an excerpt. If the source is unavailable, say so and explain the
+limitation instead of presenting guessed code.
+
 Use examples, concrete numbers, diagrams-in-text, formulas, counterexamples, tables, or
 code when they materially improve understanding. Let the complexity of the learner's
 question determine explanation length and structure. A local confusion may need only a

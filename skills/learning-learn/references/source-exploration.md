@@ -33,6 +33,14 @@ The explorer investigates; it does not teach. It must not:
 
 After the explorer returns, keep only the findings that materially support the current question. The main agent then teaches normally under the existing Learn contract and remains responsible for uncertainty and source attribution.
 
+For source-code explanations, the evidence packet should include faithful, compact excerpts
+of the relevant producer/consumer functions or handoff blocks, in addition to precise
+file locations. The main agent should put the useful excerpts in fenced code blocks in
+the learner-facing explanation and explain them in call/data-flow order. File locations
+support the excerpts; a list of file names and line numbers alone is not a code
+walkthrough. Omit unrelated code, and preserve enough surrounding logic to show the
+arguments, conditions, and handoff accurately.
+
 If the host cannot dispatch a subagent, inspect the necessary sources in the main context and continue normally. Lack of subagent capability must never block learning.
 
 ## Persistence boundary
