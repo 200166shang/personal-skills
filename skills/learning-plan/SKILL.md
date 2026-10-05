@@ -1,100 +1,89 @@
 ---
 name: learning-plan
-description: "Maintain long-horizon learning direction, current execution focus, checkpoints, and resume state."
+description: "Maintain a small Markdown learning state page with the learner's goal, current direction, bookmark, next step, and deferred topics."
 disable-model-invocation: true
 ---
 
 # Learning: Plan
 
-Maintain the learner's long-horizon direction and short-horizon execution state. Keep
-the current plan easy to resume after an interruption and light enough to maintain
-without daily reporting.
+Keep one short, human-readable Markdown page that helps the learner remember why they
+are learning, which direction they are following, where they stopped, and what to do
+next. The page is both the source of truth and the view the learner can open directly
+in Obsidian.
 
-## Choose one operation
+## State page
 
-- `init`: establish the Mission and current execution state for a new planning
-  workspace.
-- `status`: show the saved state and the single most useful next action.
-- `checkpoint`: record where a learning session or Sprint stopped.
-- `resume`: restore context after an interruption from the current plan and latest
-  checkpoint.
-- `replan`: adjust the current Phase or Sprint when goals or real-world conditions
-  have materially changed.
+Use `learning-state.md` at the root of the supplied or clearly identified Learning
+Workspace. Keep its structure to these five sections:
 
-Choose from the learner's intent. If no operation is named, use the matching operation
-above. If the request combines planning with a concrete learning question, resource
-search, review, practice, or Topic organization, recommend the relevant Skill for that
-separate intent; do not perform or invoke it automatically.
+```markdown
+# Learning State
 
-## Maintain a rolling direction
+## Goal
 
-Use four scales:
+...
 
-```text
-Mission → current Phase → current Sprint → one Next Action
+## Current Direction
+
+...
+
+## Bookmark
+
+...
+
+## Next
+
+...
+
+## Later
+
+...
 ```
 
-The Mission describes why the learner is investing in this period and the outcome they
-want, usually over months or longer. The Phase names the current capability to build,
-often over two to six weeks. The Sprint describes a small outcome to move over roughly
-three to ten days. The Next Action is concrete enough to begin in the next session
-without another planning pass. Keep `now` to a few current focuses and put worthwhile
-distractions in `later`.
+- **Goal**: the stable, plain-language reason for learning and the intended long-term
+  outcome.
+- **Current Direction**: the main learning thread and why it matters now. Describe it
+  naturally; do not split it into phases or sprints.
+- **Bookmark**: the concise point where the learner stopped, enough to resume after a
+  break. Link to learning notes when useful; do not copy them.
+- **Next**: one natural first step for the next session.
+- **Later**: important topics intentionally deferred for now.
 
-Keep only the current Phase and Sprint. Let the learner adapt as conditions change;
-never expand the Mission into a fixed multi-week course or a daily schedule.
+## Read
 
-## Run the operation
+When the learner asks what they are studying, where they stopped, or what to continue,
+read `learning-state.md` and answer from **Current Direction**, **Bookmark**, and
+**Next**. Keep the response brief and grounded in the page. A read request leaves the
+file unchanged unless the same request also asks to record new state; in that case,
+follow **Update** for the affected sections. If the page is missing, say that no saved
+state page is available.
 
-### `init`
+## Update
 
-Use explicit goals and constraints already present in the conversation. Establish the
-Mission, current Phase, Sprint, `now`, one `next_action`, `later`, and `open_loops`. Ask
-one focused question only when the Mission cannot reasonably be inferred. Create the
-durable state described in [the state contract](references/state-contract.md). Base
-success criteria and Sprint outcomes on evidence the learner supplied or confirmed;
-leave unknown criteria empty and keep unknown context in `open_loops`. Do not invent
-portfolio deliverables, timelines, or weekly capacity to make the plan look complete.
+When the learner asks to record progress or change the learning direction, read the
+existing page first. Create it with the fixed structure if it does not exist. Use only
+information the learner has supplied or confirmed; leave unknown sections brief rather
+than filling them by assumption. Ask one focused question only when it is impossible to
+tell what they want recorded.
 
-### `status`
+Change only the sections affected by the update and preserve the rest. Progress usually
+changes **Bookmark** and **Next**. A temporary change of focus may also change **Current
+Direction** and **Later**. Change **Goal** only when the learner explicitly changes the
+long-term outcome. When the learner pauses a direction, preserve its useful bookmark
+and next step in one concise **Later** item. If the new direction has no supplied
+bookmark or next step, write `尚未记录` in those sections instead of carrying over the
+old direction's state or guessing. Keep **Next** to one action and **Later** to a short
+list.
 
-Read the plan and latest checkpoint as needed. This operation is read-only. Briefly
-show Mission, current Phase and Sprint, **NOW**, **NEXT ACTION**, Later, open loops, and
-the last checkpoint. Put NOW and NEXT ACTION first; omit empty sections.
+## Boundaries
 
-### `checkpoint`
+This Skill owns only `learning-state.md`. `learning-learn` owns Questions, explanations,
+Question Graphs, and Learning Notes. `learning-organize` owns Topic Compasses and Topic
+articles. Link to those materials when useful, while keeping this page about orientation
+rather than knowledge content.
 
-Capture the progress, current state, next action, and open loops supplied by the
-learner. `learned` is optional and should stay brief. Create a new checkpoint and
-update the current plan's state and checkpoint pointer. Keep it a navigation record,
-not a copy of learning notes.
-
-### `resume`
-
-Read `plan.yaml` and its referenced latest checkpoint. Restore the Mission, Phase,
-Sprint, where the learner stopped, and one natural Next Action. Resume first; an
-interruption alone is not a reason to replan. If the saved direction appears obsolete,
-explain the mismatch and let the learner choose `replan`.
-
-### `replan`
-
-Use only when the learner's goal, constraints, project direction, or current Sprint
-outcome has materially changed. Adjust the current Phase, Sprint, `now`, `next_action`,
-`later`, or `open_loops` as needed. Keep the Mission stable unless the learner explicitly
-changes the long-term goal. Update the current plan without rewriting checkpoint
-history.
-
-## Keep ownership clear
-
-- This Skill owns Direction and execution state: Mission, current Phase and Sprint,
-  Now / Next / Later, open loops, and checkpoints.
-- `learning-learn` owns Questions and explanations.
-- `learning-organize` owns Topic projections.
-- `learning-review`, `learning-practice`, and `learning-resources` own their explicit
-  downstream workflows.
-
-Keep planning data in `planning/` only. Read other Learning files only when the current
-plan needs that context, and never copy a Question Graph into the plan. Do not create
-Questions, edit Question notes or Topic files, track mastery or streaks, or turn the
-plan into a task manager, calendar, or spaced-repetition system. The state contract
-defines the file schema and read/write boundaries.
+Keep the state in Markdown. Do not add YAML, JSON, checkpoint history, a generated view,
+curriculum, roadmap, phases, sprints, daily plans, task lists, mastery, streaks, due
+dates, deadlines, or schedules. Do not create or edit Questions, Root/thread state, or
+Topic files. A break alone does not call for a new learning direction; restore the
+Bookmark and Next from the page.
