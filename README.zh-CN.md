@@ -25,6 +25,7 @@
 本仓库是个人 Learning skills 的唯一维护来源：
 
 - `learning`：根据意图选择学习工作流。
+- `learning-plan`：维护长期学习方向、当前阶段、短期 Focus、Checkpoint 与中断后的状态恢复。
 - `learning-learn`：讲解问题并保存持久化学习记录。
 - `learning-review`：通过主动回忆复习已有内容。
 - `learning-practice`：用小型练习应用已学内容。

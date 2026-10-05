@@ -25,6 +25,8 @@ More complex projects with their own architecture, release cycle, or long-term r
 The repository is the source of truth for the personal Learning skills:
 
 - `learning` — routes to an explicit learning workflow.
+- `learning-plan` — maintains long-term learning direction, current focus,
+  checkpoints, and resume state.
 - `learning-learn` — teaches and records durable learning.
 - `learning-review` — reviews saved understanding through active recall.
 - `learning-practice` — applies saved understanding in a small exercise.

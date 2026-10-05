@@ -9,6 +9,9 @@ disable-model-invocation: true
 Use this Skill only when the learner is unsure which explicit Learning workflow fits.
 Recommend one primary Skill and stop.
 
+- Set or revisit a long-term learning goal, choose the current phase or focus, save a
+  checkpoint, resume after an interruption, or adjust the current learning direction
+  -> recommend `learning-plan`.
 - New question, continue understanding, source/code explanation, or correction of saved
   learning -> recommend `learning-learn`.
 - Retrieve and reconstruct saved understanding before seeing the explanation ->
