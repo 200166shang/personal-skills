@@ -27,6 +27,7 @@
 - `learning`：根据意图选择学习工作流。
 - `learning-plan`：用一个简短 Markdown 状态页记录长期方向、当前主线、学习书签、下一步和暂缓主题。
 - `learning-learn`：讲解问题并保存持久化学习记录。
+- `learning-point`：记录和复述独立的小知识点、项目细节或面试回答。
 - `learning-review`：通过主动回忆复习已有内容。
 - `learning-practice`：用小型练习应用已学内容。
 - `learning-resources`：整理外部学习资料。

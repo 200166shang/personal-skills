@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning: Point"
+  short_description: "Capture and rehearse small explainable knowledge points"
+  default_prompt: "Use $learning-point to help me capture or actively recall a concise knowledge point, project detail, or interview answer."
+policy:
+  allow_implicit_invocation: false
