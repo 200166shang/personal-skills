@@ -1,6 +1,6 @@
 interface:
   display_name: "Learning: Review"
-  short_description: "Retrieve and reconstruct saved understanding"
-  default_prompt: "Use $learning-review to review this existing Learning Thread by asking me to reconstruct the important mechanism before showing the saved explanation."
+  short_description: "Review learning through grounded technical questions"
+  default_prompt: "Use $learning-review to review this topic or project module through source-grounded technical questions, one at a time, and save only high-value reusable Q&A."
 policy:
   allow_implicit_invocation: false

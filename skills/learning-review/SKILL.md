@@ -1,65 +1,99 @@
 ---
 name: learning-review
-description: "Review an existing learning workspace by reconstructing the important mechanism before seeing the saved explanation."
+description: "Use when reviewing saved or supplied learning material, rehearsing technical explanations, or conducting an engineering interview or project deep-dive."
 disable-model-invocation: true
 ---
 
 # Learning: Review
 
-Use this Skill only for explicit review of an existing multi-Root learning workspace.
+Run an AI-led, source-grounded technical review. The learner gives a topic, module, or
+project scope; ask one useful question at a time, evaluate the answer, and save only
+high-value reusable Q&A. Review is the activity; `review-bank.md` is its optional
+durable output.
 
-Review consumes saved learning; it does not own learning state. Do not create a thread,
-change its graph, or record review status merely because review happened.
+## Resolve material
 
-## Resolve
+- Use the Learning Workspace, topic, project, or source files the learner names or
+  supplies. Consider relevant Question notes, Topic articles, Research notes, README,
+  tutorials, code, and the current conversation; do not limit review to Question notes.
+- Read enough relevant material to ask a grounded question. For a project, inspect the
+  files that show the key path or design rather than scanning an unrelated source tree.
+- Base questions on the learner's real material whenever possible. Use general
+  technical knowledge to check, explain, deepen, or extend it—not to replace it with a
+  generic trivia quiz. Distinguish evidence from inference and never invent ownership,
+  production use, or performance results.
+- If the requested scope or source is unclear, ask one focused clarification. If no
+  usable material is available, say what is missing rather than inventing project facts.
 
-- Use the workspace and Root supplied or clearly identified by the learner.
-- If no valid `root-compass.yaml` and activated Root thread exist, say that durable review material is unavailable and
-  stop. Do not invent questions or create a thread.
-- If the learner names a Root-qualified Question, resolve it through that Root's
-  `thread.yaml`. If they name a local `qNNN`, require a clear Root context.
-- Otherwise use the active Root and its `current`; if no Root is active, ask which
-  explored Root to review.
-- Read the selected Question note first. Read only the minimum parent notes needed
-  to understand the mechanism being reviewed.
+## Ask
 
-## Retrieve before reveal
+Default to an engineering interview or project deep-dive style. Choose questions that
+test understanding of the supplied material, especially:
 
-Ask the learner to reconstruct the important mechanism, causal connection, or
-concept-to-code relationship before showing the saved explanation.
+- end-to-end flow and causal mechanisms;
+- architecture and design choices, including alternatives and trade-offs;
+- failure handling, edge cases, and implementation details;
+- scaling, extension, and project-specific reasoning.
 
-Prefer one meaningful prompt at a time. Do not quiz on wording, filenames, or trivia
-when the saved note supports a more important connection.
-
-Do not reveal the answer in the prompt. If the learner asks for a hint, give the
-smallest hint that preserves retrieval effort.
+Use these as priorities, not a checklist. Avoid isolated definitions or trivia unless
+they expose a deeper gap. Ask one meaningful question, then wait. Deepen progressively
+based on the learner's answer; skip ahead when they have already explained a layer well.
+Do not generate a long question list or reveal the answer in the prompt.
 
 ## Evaluate
 
-Compare the learner's answer with the durable note and any relevant source evidence.
-Judge the technical connection, not exact wording.
+Judge the technical connections, causal reasoning, completeness, and consistency with
+the supplied evidence—not memorized wording. Say whether the answer is correct, mostly
+correct but incomplete, or contains a key error. Acknowledge correct parts, identify
+the important gap, and give a concise, accurate reference answer suitable for speaking
+aloud. Ground project claims in the material or the learner's confirmed experience;
+never polish an unsupported claim into a fact. Offer one focused retry when useful, or
+choose a follow-up that responds to what the learner actually said.
 
-- If the reasoning is correct in equivalent language, say why it is correct.
-- If it is incomplete, identify the missing connection without treating the whole
-  answer as wrong.
-- If it is incorrect, name the broken connection and explain the correction clearly.
-- When useful, allow one focused retry after the repair.
+## Record
 
-Do not infer permanent mastery from one successful response.
+Save only questions worth explaining again: important mechanisms, core project flows,
+architectural choices, meaningful trade-offs, failure cases, or likely deep interview
+questions. Do not save every diagnostic, definition, or clarification question.
 
-## Stop
+When a durable Learning Workspace is clearly identified, keep its Review Bank at:
 
-Stop after the learner's requested review scope. Do not silently generate a curriculum,
-review queue, schedule, or additional quiz set.
+```text
+review/
+  review-bank.md
+```
 
-Ordinary review is read-only with respect to the learning workspace:
+Use one Markdown file per workspace, creating it only for a high-value entry. Keep
+entries concise and update an existing entry when the same question recurs. Preserve
+the learner's current natural answer and a stronger reference answer, with key points
+and useful follow-ups when they add value:
 
-- do not change Root status or a Root's `current`;
-- do not add, remove, or rewrite nodes or parent links;
-- do not store scores, mastery, due dates, intervals, streaks, review status, or attempt
-  history in `thread.yaml`;
-- do not rewrite Question notes simply to record a review result.
+```markdown
+# Review Bank
 
-If review reveals a likely factual error in a saved explanation, report it clearly and
-recommend correcting it through `learning-learn`; do not silently mutate Learn-owned
-artifacts during ordinary review.
+## Why does this module use gRPC instead of making the SDK depend directly on ROS 2?
+
+### My answer
+<the learner's current explanation>
+
+### Reference
+<a technically grounded answer the learner can say aloud>
+
+### Key points
+- <important mechanism or trade-off>
+
+### Follow-ups
+- <one useful deeper question>
+```
+
+Update the file after the learner has answered and the reusable entry is clear. If no
+durable workspace is identified, keep the review in conversation; do not invent a path.
+
+## Boundaries
+
+- Review owns only `review/review-bank.md`. Do not mutate Root status, `root-compass.yaml`,
+  `thread.yaml`, Question notes, Topic articles, or Research notes.
+- If review exposes a real knowledge gap, explain it briefly and suggest `learning-learn`
+  for recursive exploration; do not create or edit Questions here.
+- Do not add a Point skill or Point file, interview modes, scores, mastery, attempt
+  history, spaced-repetition state, queues, or schedules.

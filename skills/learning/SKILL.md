@@ -14,11 +14,8 @@ Recommend one primary Skill and stop.
   `learning-plan`.
 - New question, continue understanding, source/code explanation, or correction of saved
   learning -> recommend `learning-learn`.
-- Capture, recall, rehearse, or refine one small knowledge point, project detail, or
-  interview answer without opening a recursive exploration -> recommend
-  `learning-point`.
-- Retrieve and reconstruct saved understanding before seeing the explanation ->
-  recommend `learning-review`.
+- Review, quiz, technical interview, project deep-dive, active recall, or ask the learner
+  questions about saved or supplied learning material -> recommend `learning-review`.
 - Apply saved understanding in an exercise, code task, trace, prediction, or reasoning
   problem -> recommend `learning-practice`.
 - Find external documentation, source code, demos, articles, talks, videos, courses, or
