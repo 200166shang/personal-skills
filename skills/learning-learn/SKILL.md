@@ -41,6 +41,33 @@ workspace must be created, updated, or resumed.
   then read its `thread.yaml` and current note. Follow parent links only as far as the
   present question requires.
 
+## Reuse prior learning context
+
+When the learner starts a new module, explicitly asks to reuse earlier learning, or
+asks a question that clearly builds on another studied module, look for relevant
+Learning Workspaces in the current learning collection. Use a path or collection the
+learner supplied; otherwise infer the collection only when the current workspace's
+parent directory clearly groups Learning Workspaces. Check direct candidates for
+existing Learning markers such as `root-compass.yaml`. If the collection boundary or
+candidate locations are unclear, continue with the available context instead of
+searching the repository or filesystem broadly. A learner-named workspace may be
+looked up outside the current collection.
+
+Discover progressively: use workspace names and `organized/compass.md` to narrow the
+search, read only relevant Topic articles, and use `root-compass.yaml`, the matching
+Root's `thread.yaml`, and its Question notes when no suitable Topic exists. Do not
+load every Question or use `review/interview.md` as a default knowledge source. Reuse
+what is useful as background, focus integrated questions on the new mechanism and
+connections, and respect requests to start fresh or avoid prior material. A concrete
+question remains answerable without a discovery preamble; prior notes may inform the
+answer when they materially help. Similarity alone never blocks a repeat explanation,
+deeper exploration, or Question recording.
+
+Keep reuse contextual: do not add global indexes, dependency graphs, cross-workspace
+IDs, or other persistent reuse state. Historical workspaces are read-only during the
+current learning task. If useful, cite an existing note using the ordinary Markdown
+link rules in [the recording contract](references/recording.md).
+
 ## Teach
 
 Teach for understanding, not for template completion. Answer like a normal high-quality

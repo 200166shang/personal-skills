@@ -121,6 +121,18 @@ the learner reached each question in that view. Do not block a question because 
 resembles an earlier one and do not add cross-Root identity metadata. Topic organization
 is responsible for later semantic aggregation.
 
+## Cross-workspace references
+
+When a Question materially builds on learning recorded in another workspace, it may
+link to the relevant existing Topic or Question using an ordinary Markdown link.
+Prefer a suitable Topic; otherwise locate a Question through that workspace's Root
+Compass and Root-local `thread.yaml`. Resolve the relative path from the current note
+and confirm the target exists before writing the link. Include only references that
+help explain the current question, and keep the note independently readable without
+opening them. These links provide context; they do not establish ownership,
+dependencies, or canonical identity. Do not add metadata fields or modify the
+referenced workspace.
+
 ## Build a note for relearning
 
 Use the minimum note shape:
