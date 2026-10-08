@@ -1,65 +1,75 @@
 ---
 name: learning-review
-description: "Review an existing learning workspace by reconstructing the important mechanism before seeing the saved explanation."
+description: "Use when the learner has studied a topic or module and wants to prepare interview explanations or practice explaining its solution and implementation clearly."
 disable-model-invocation: true
 ---
 
 # Learning: Review
 
-Use this Skill only for explicit review of an existing multi-Root learning workspace.
+Help the learner turn an already learned module into a few strong, speakable interview
+answers. Learn explores details; Organize synthesizes a complete Topic; Review selects
+representative questions and practices explaining the module clearly.
 
-Review consumes saved learning; it does not own learning state. Do not create a thread,
-change its graph, or record review status merely because review happened.
+## Resolve scope and material
 
-## Resolve
+- Work on one previously studied Topic or project module named by the learner. If the
+  target is unclear, ask one focused question before selecting interview material.
+- Read the relevant Questions, Topic, Research, implementation, tutorial, or supplied
+  conversation. Use adjacent modules only to explain an interface or handoff; they do
+  not become separate questions unless the learner expands the scope.
+- Ground technical and project claims in those materials or facts the learner confirms.
+  Do not invent personal ownership, design decisions, production use, or results.
 
-- Use the workspace and Root supplied or clearly identified by the learner.
-- If no valid `root-compass.yaml` and activated Root thread exist, say that durable review material is unavailable and
-  stop. Do not invent questions or create a thread.
-- If the learner names a Root-qualified Question, resolve it through that Root's
-  `thread.yaml`. If they name a local `qNNN`, require a clear Root context.
-- Otherwise use the active Root and its `current`; if no Root is active, ask which
-  explored Root to review.
-- Read the selected Question note first. Read only the minimum parent notes needed
-  to understand the mechanism being reviewed.
+## Select interview Q&A
 
-## Retrieve before reveal
+When no saved Q&A exists for the target, propose 3–5 representative questions with
+concise spoken reference answers. Briefly explain why each is worth keeping, then wait
+for the learner to confirm or adjust them before saving. Prefer questions that connect
+the module's main solution or implementation, invite meaningful depth, show supported
+engineering understanding, and do not duplicate one another. Deliberately leave
+isolated parameter facts, definitions, and secondary details in the learning material
+unless they are central to explaining the module.
 
-Ask the learner to reconstruct the important mechanism, causal connection, or
-concept-to-code relationship before showing the saved explanation.
+The learner may specify additional questions. Keep in-scope questions even if that
+takes the set beyond 3–5; explain briefly why each is worth practicing, draft a strong
+spoken answer from the available evidence, and confirm the complete entry before
+saving. Merge duplicates. If a requested question belongs to a different module, ask
+whether the learner wants to expand the scope.
 
-Prefer one meaningful prompt at a time. Do not quiz on wording, filenames, or trivia
-when the saved note supports a more important connection.
+Save confirmed entries in `review/interview.md`, one file per Learning Workspace,
+grouped by module. Each entry contains only the question, a brief reason it is worth
+practicing, and the reference answer. Do not save the learner's practice answers. If no
+durable workspace is identified, keep the confirmed material in the conversation
+instead of inventing a path.
 
-Do not reveal the answer in the prompt. If the learner asks for a hint, give the
-smallest hint that preserves retrieval effort.
+Reuse saved Q&A for the same scope. Refresh only when the learner asks: compare the
+existing set with the new material, propose additions or edits, and save only after the
+learner confirms the changes.
 
-## Evaluate
+## Practice
 
-Compare the learner's answer with the durable note and any relevant source evidence.
-Judge the technical connection, not exact wording.
+After the learner confirms a new or refreshed set, start with its first question. For
+later practice, use the saved set and start at the first question unless the learner
+names another one. Show one question without its answer and wait for the learner to
+respond.
 
-- If the reasoning is correct in equivalent language, say why it is correct.
-- If it is incomplete, identify the missing connection without treating the whole
-  answer as wrong.
-- If it is incorrect, name the broken connection and explain the correction clearly.
-- When useful, allow one focused retry after the repair.
+After each response, briefly say what was clear and identify the most important gap or
+error. Then give the reference answer as a natural, accurate explanation that can be
+spoken in roughly one to three minutes: start with plain language and preserve the
+technical terms needed for precision. Keep the learner's actual project evidence; do
+not turn the answer into a textbook entry or invented personal story. Continue with the
+next question.
 
-Do not infer permanent mastery from one successful response.
+Use a temporary, in-scope follow-up only when it helps repair a misunderstanding, then
+return to the saved questions. Do not save practice attempts or progress. Continue from
+the conversation when available; in a new conversation, start at the first question or
+the one the learner specifies.
 
-## Stop
+## Boundaries
 
-Stop after the learner's requested review scope. Do not silently generate a curriculum,
-review queue, schedule, or additional quiz set.
-
-Ordinary review is read-only with respect to the learning workspace:
-
-- do not change Root status or a Root's `current`;
-- do not add, remove, or rewrite nodes or parent links;
-- do not store scores, mastery, due dates, intervals, streaks, review status, or attempt
-  history in `thread.yaml`;
-- do not rewrite Question notes simply to record a review result.
-
-If review reveals a likely factual error in a saved explanation, report it clearly and
-recommend correcting it through `learning-learn`; do not silently mutate Learn-owned
-artifacts during ordinary review.
+- Review owns only the confirmed Q&A in `review/interview.md`. Do not modify Questions,
+  Topics, Research, Root state, or project source files.
+- Review is for explaining learned material, not opening another recursive learning
+  thread. If the learner reveals a real gap, explain it briefly and suggest
+  `learning-learn` for exploration.
+- Do not add scores, mastery, attempt history, queues, or review schedules.
