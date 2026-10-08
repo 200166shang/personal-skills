@@ -1,6 +1,6 @@
 interface:
   display_name: "Learning: Review"
-  short_description: "Practice explaining learned topics clearly"
-  default_prompt: "Use $learning-review to help me explain this learned topic or module clearly, then give concise feedback and a stronger spoken answer."
+  short_description: "Prepare and practice interview answers"
+  default_prompt: "Use $learning-review to propose a few representative interview questions and spoken answers for this learned module, let me confirm them, then practice one at a time."
 policy:
   allow_implicit_invocation: false

@@ -27,7 +27,7 @@ The repository is the source of truth for the personal Learning skills:
 - `learning` — routes to an explicit learning workflow.
 - `learning-plan` — keeps a small Markdown state page for long-term direction, current focus, resume bookmark, next step, and deferred topics.
 - `learning-learn` — teaches and records durable learning.
-- `learning-review` — helps explain learned topics and project modules clearly, with concise interview-style feedback.
+- `learning-review` — selects a few representative interview questions and spoken answers from learned material, then practices them one at a time.
 - `learning-practice` — applies saved understanding in a small exercise.
 - `learning-resources` — curates external learning materials.
 - `learning-organize` — organizes pursued questions into topic articles.

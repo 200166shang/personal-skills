@@ -1,69 +1,73 @@
 ---
 name: learning-review
-description: "Use when the learner has studied a topic or module and wants to practice explaining its solution, design, or implementation clearly, including for an interview."
+description: "Use when the learner has studied a topic or module and wants to prepare interview explanations or practice explaining its solution and implementation clearly."
 disable-model-invocation: true
 ---
 
 # Learning: Review
 
-Help the learner explain what they have already studied in clear, accurate, spoken
-language. Learn explores details; Organize makes a complete written Topic; Review
-practices explaining the important story without trying to cover every detail.
+Help the learner turn an already learned module into a few strong, speakable interview
+answers. Learn explores details; Organize synthesizes a complete Topic; Review selects
+representative questions and practices explaining the module clearly.
 
-## Use the learned material
+## Resolve scope and material
 
-- Start from the Topic, Root Question, project module, or material the learner names.
-  Read the relevant Question, Topic, Research, code, tutorial, or supplied conversation
-  as evidence. Do not turn every detail in those sources into a separate interview
-  question.
-- Keep the named module as the scope. Adjacent modules may explain an interface or
-  handoff, but do not become new questions unless the learner expands the scope.
-- Ground project claims in source material or facts the learner confirms. Never invent
-  personal ownership, decisions, production use, or results.
-- If the target is unclear, ask one focused clarification. If the material is sparse,
-  use what is known and say where a stronger answer needs confirmation.
+- Work on one previously studied Topic or project module named by the learner. If the
+  target is unclear, ask one focused question before selecting interview material.
+- Read the relevant Questions, Topic, Research, implementation, tutorial, or supplied
+  conversation. Use adjacent modules only to explain an interface or handoff; they do
+  not become separate questions unless the learner expands the scope.
+- Ground technical and project claims in those materials or facts the learner confirms.
+  Do not invent personal ownership, design decisions, production use, or results.
 
-## Practice explaining
+## Select interview Q&A
 
-Ask one broad prompt that invites a connected explanation, such as what the module
-solves, how its solution works from input to output, or why its main design was chosen.
-Prefer a natural interview prompt over a list of detail questions. Start from the
-selected Topic or Root Question; do not create a new question tree or quiz the learner
-on every parameter, field, API, or fact in the notes.
+When no saved Q&A exists for the target, propose 3–5 representative questions with
+concise spoken reference answers. Briefly explain why each is worth keeping, then wait
+for the learner to confirm or adjust them before saving. Prefer questions that connect
+the module's main solution or implementation, invite meaningful depth, show supported
+engineering understanding, and do not duplicate one another. Deliberately leave
+isolated parameter facts, definitions, and secondary details in the learning material
+unless they are central to explaining the module.
 
-For a radar module, prefer “Walk me through how radar data reaches its consumer and
-where coordinate transforms matter” over isolated questions about `reversion`,
-`inverted`, or a `LaserScan` array index. Ask those details only if they are needed to
-repair the learner's explanation or the learner asks to study them.
+The learner may specify additional questions. Keep in-scope questions even if that
+takes the set beyond 3–5; draft a strong spoken answer from the available evidence and
+confirm the pair before saving. Merge duplicates. If a requested question belongs to a
+different module, ask whether the learner wants to expand the scope.
 
-Wait for the learner to explain. Then briefly say what was clear, identify the most
-important missing or inaccurate connection, and give a stronger spoken answer. Start
-with plain language and keep the technical terms needed for accuracy. Use the learner's
-actual design and evidence; do not invent a polished personal story.
+Save confirmed pairs in `review/interview.md`, one file per Learning Workspace, grouped
+by module. Keep the file to questions and reference answers only. Do not save the
+learner's practice answers. If no durable workspace is identified, keep the confirmed
+material in the conversation instead of inventing a path.
 
-Ask a short follow-up only to clarify or repair the explanation within the same scope.
-If the learner already explained the core story well, stop or ask whether they want
-another angle. If they reveal a genuine knowledge gap, explain it briefly and suggest
-`learning-learn` for deeper exploration.
+Reuse saved Q&A for the same scope. Refresh only when the learner asks: compare the
+existing set with the new material, propose additions or edits, and save only after the
+learner confirms the changes.
 
-## Optional interview anchors
+## Practice
 
-Do not generate or save an interview bank by default. If the learner explicitly wants a
-small reusable set, propose 3–5 connected explanation prompts from the learned material
-and explain briefly why each earns a place. Prefer prompts that represent the module's
-main path, invite meaningful depth, show real engineering understanding, and do not
-duplicate one another. Leave parameter trivia, isolated definitions, and secondary
-details in the underlying Question or Topic unless they are central to the module.
+After the learner confirms a new or refreshed set, start with its first question. For
+later practice, use the saved set and start at the first question unless the learner
+names another one. Show one question without its answer and wait for the learner to
+respond.
 
-Let the learner confirm or adjust the prompts before saving them to
-`review/interview.md`. Store only each confirmed prompt and its concise spoken reference
-answer. Keep the learner's practice answers in chat. Reuse the saved anchors until the
-learner asks to revise them or provides materially new learning.
+After each response, briefly say what was clear and identify the most important gap or
+error. Then give the reference answer as a natural, accurate explanation that can be
+spoken in roughly one to three minutes: start with plain language and preserve the
+technical terms needed for precision. Keep the learner's actual project evidence; do
+not turn the answer into a textbook entry or invented personal story. Continue with the
+next question.
+
+Use a temporary, in-scope follow-up only when it helps repair a misunderstanding, then
+return to the saved questions. Do not save practice attempts or progress. Continue from
+the conversation when available; in a new conversation, start at the first question or
+the one the learner specifies.
 
 ## Boundaries
 
-- Review owns only `review/interview.md` when the learner explicitly asks to save
-  interview anchors. Ordinary explain-back practice stays in conversation.
-- Do not modify Question, Topic, Research, Root state, or project source files.
-- Do not expand into adjacent modules, create a new question graph, or add scores,
-  mastery, attempt history, queues, or review schedules.
+- Review owns only the confirmed Q&A in `review/interview.md`. Do not modify Questions,
+  Topics, Research, Root state, or project source files.
+- Review is for explaining learned material, not opening another recursive learning
+  thread. If the learner reveals a real gap, explain it briefly and suggest
+  `learning-learn` for exploration.
+- Do not add scores, mastery, attempt history, queues, or review schedules.
