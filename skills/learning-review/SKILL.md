@@ -1,84 +1,69 @@
 ---
 name: learning-review
-description: "Use when generating or practicing a fixed-scope technical interview bank for a learning topic, project, or module."
+description: "Use when the learner has studied a topic or module and wants to practice explaining its solution, design, or implementation clearly, including for an interview."
 disable-model-invocation: true
 ---
 
 # Learning: Review
 
-Build a small, source-grounded interview bank for one target scope, then practice it
-one question at a time. Keep the scope fixed. The learner's answers stay in chat; the
-bank contains only questions and reference answers.
+Help the learner explain what they have already studied in clear, accurate, spoken
+language. Learn explores details; Organize makes a complete written Topic; Review
+practices explaining the important story without trying to cover every detail.
 
-## Resolve scope and material
+## Use the learned material
 
-- Start from the topic, project, or module the learner names. If its boundary is
-  unclear, ask one focused question before building the bank.
-- Read relevant Question notes, Topic articles, Research, tutorials, README, supplied
-  materials, and source code. Materials may come from a larger workspace, but select
-  only what supports the target scope; do not scan unrelated project areas.
-- Adjacent modules may explain the target's boundary or data handoff. Use them as
-  context, not as new review scope. If the learner mentions another module in an
-  answer, evaluate only the part relevant to the target and do not switch topics unless
-  the learner explicitly expands the scope.
-- Ground project-specific answers in evidence or facts the learner confirms. Use
-  general technical knowledge to clarify mechanisms and check accuracy; do not invent
-  personal ownership, production use, or results.
+- Start from the Topic, Root Question, project module, or material the learner names.
+  Read the relevant Question, Topic, Research, code, tutorial, or supplied conversation
+  as evidence. Do not turn every detail in those sources into a separate interview
+  question.
+- Keep the named module as the scope. Adjacent modules may explain an interface or
+  handoff, but do not become new questions unless the learner expands the scope.
+- Ground project claims in source material or facts the learner confirms. Never invent
+  personal ownership, decisions, production use, or results.
+- If the target is unclear, ask one focused clarification. If the material is sparse,
+  use what is known and say where a stronger answer needs confirmation.
 
-## Build the bank
+## Practice explaining
 
-If a bank already exists for the exact scope, reuse it. Create one when it is missing;
-refresh it only when the learner asks or provides materially new sources. Prefer a
-stable set of about 10–15 useful questions when the material supports it; make fewer
-when evidence or scope is limited. Cover the target's role, how it works (flow and key
-mechanisms), why it is designed that way, and likely implementation or failure
-questions. These are priorities, not required categories. Prefer project-grounded
-explanation over generic definitions.
+Ask one broad prompt that invites a connected explanation, such as what the module
+solves, how its solution works from input to output, or why its main design was chosen.
+Prefer a natural interview prompt over a list of detail questions. Start from the
+selected Topic or Root Question; do not create a new question tree or quiz the learner
+on every parameter, field, API, or fact in the notes.
 
-Save the bank at `review/interview-bank.md` in the clearly identified Learning
-Workspace. Keep one file per workspace. Group entries under a scope heading when the
-workspace has several modules; otherwise keep the file flat. Use only numbered
-questions and their reference answers:
+For a radar module, prefer “Walk me through how radar data reaches its consumer and
+where coordinate transforms matter” over isolated questions about `reversion`,
+`inverted`, or a `LaserScan` array index. Ask those details only if they are needed to
+repair the learner's explanation or the learner asks to study them.
 
-```markdown
-# Interview Bank
+Wait for the learner to explain. Then briefly say what was clear, identify the most
+important missing or inaccurate connection, and give a stronger spoken answer. Start
+with plain language and keep the technical terms needed for accuracy. Use the learner's
+actual design and evidence; do not invent a polished personal story.
 
-## Radar Module
+Ask a short follow-up only to clarify or repair the explanation within the same scope.
+If the learner already explained the core story well, stop or ask whether they want
+another angle. If they reveal a genuine knowledge gap, explain it briefly and suggest
+`learning-learn` for deeper exploration.
 
-### Q1. What does the radar module contribute to the robot?
+## Optional interview anchors
 
-The radar provides two-dimensional distance measurements around the robot. Its driver
-publishes them as `/scan`; downstream consumers can use those measurements with the
-relevant coordinate transforms for tasks such as obstacle handling.
-```
+Do not generate or save an interview bank by default. If the learner explicitly wants a
+small reusable set, propose 3–5 connected explanation prompts from the learned material
+and explain briefly why each earns a place. Prefer prompts that represent the module's
+main path, invite meaningful depth, show real engineering understanding, and do not
+duplicate one another. Leave parameter trivia, isolated definitions, and secondary
+details in the underlying Question or Topic unless they are central to the module.
 
-Do not store the learner's answers, follow-up questions, key-point lists, scores,
-attempts, dates, or mastery state. Update existing questions when refreshing the same
-scope; do not keep duplicate versions. If no durable workspace is identified, build a
-temporary bank in context without inventing a file path.
-
-## Drill
-
-Use the fixed bank as the main sequence. Start by showing only the first question and
-wait for the learner's answer; do not reveal its reference answer or the remaining
-questions. After each answer, briefly say what is right and what important point is
-missing or incorrect, then give the reference answer from the bank in clear spoken
-language. Present the next bank question and wait.
-
-If an answer exposes a clear misunderstanding, ask a brief temporary follow-up to
-repair it, then return to the next bank question. Keep the follow-up inside the locked
-scope; do not add it to the bank unless it is promoted to a formal question during an
-explicit bank refresh. Evaluate understanding, not exact wording. Do not add headings
-or scoring structure to routine feedback; keep it to the question, a concise assessment,
-and the reference answer.
+Let the learner confirm or adjust the prompts before saving them to
+`review/interview.md`. Store only each confirmed prompt and its concise spoken reference
+answer. Keep the learner's practice answers in chat. Reuse the saved anchors until the
+learner asks to revise them or provides materially new learning.
 
 ## Boundaries
 
-- Questions must stay within the named scope. Adjacent systems can appear only to
-  explain an interface or handoff; do not turn them into independent questions.
-- Review owns only `review/interview-bank.md`. Do not modify Question, Topic, or
-  Research material, Root state, or project source code.
-- If practice reveals a broader knowledge gap, explain it briefly and suggest
-  `learning-learn` for exploration without changing the current scope.
-- Do not create a separate Point artifact or interview workflow, dynamic question
-  queue, mode, scoring system, mastery state, attempt history, or review schedule.
+- Review owns only `review/interview.md` when the learner explicitly asks to save
+  interview anchors. Ordinary explain-back practice stays in conversation.
+- Do not modify Question, Topic, Research, Root state, or project source files.
+- Do not expand into adjacent modules, create a new question graph, or add scores,
+  mastery, attempt history, queues, or review schedules.

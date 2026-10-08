@@ -27,7 +27,7 @@
 - `learning`：根据意图选择学习工作流。
 - `learning-plan`：用一个简短 Markdown 状态页记录长期方向、当前主线、学习书签、下一步和暂缓主题。
 - `learning-learn`：讲解问题并保存持久化学习记录。
-- `learning-review`：基于已有学习资料生成固定范围的技术面试题库，并逐题练习和对照参考答案。
+- `learning-review`：练习清晰讲解已学主题或项目模块，并获得简洁的面试表达反馈。
 - `learning-practice`：用小型练习应用已学内容。
 - `learning-resources`：整理外部学习资料。
 - `learning-organize`：把已探索的问题组织成主题文章。

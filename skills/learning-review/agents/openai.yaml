@@ -1,6 +1,6 @@
 interface:
   display_name: "Learning: Review"
-  short_description: "Build and practice a fixed-scope interview bank"
-  default_prompt: "Use $learning-review to build or practice a fixed-scope, source-grounded interview bank, asking one question at a time and comparing my answer with the reference."
+  short_description: "Practice explaining learned topics clearly"
+  default_prompt: "Use $learning-review to help me explain this learned topic or module clearly, then give concise feedback and a stronger spoken answer."
 policy:
   allow_implicit_invocation: false
