@@ -20,7 +20,7 @@ _Avoid_: Detail quiz, comprehensive question bank
 One previously studied Topic or project module explicitly selected for a Review session. Related Questions, Research, and implementation material can support it; neighboring modules do not become separate review subjects.
 
 **Interview Q&A**:
-A finalized, reusable, module-representative interview prompt—proposed by the assistant or specified by the learner—paired with a strong spoken answer. It invites a coherent explanation of the solution or implementation rather than testing an isolated saved detail; the learner's practice attempts are separate.
+A finalized, reusable, module-representative interview prompt—proposed by the assistant or specified by the learner—paired with a brief reason it is worth practicing and a strong spoken answer. It invites a coherent explanation of the solution or implementation rather than testing an isolated saved detail; the learner's practice attempts are separate.
 _Avoid_: Practice transcript, attempt history
 
 **Spoken Reference Answer**:

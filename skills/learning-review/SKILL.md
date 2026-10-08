@@ -31,14 +31,16 @@ isolated parameter facts, definitions, and secondary details in the learning mat
 unless they are central to explaining the module.
 
 The learner may specify additional questions. Keep in-scope questions even if that
-takes the set beyond 3–5; draft a strong spoken answer from the available evidence and
-confirm the pair before saving. Merge duplicates. If a requested question belongs to a
-different module, ask whether the learner wants to expand the scope.
+takes the set beyond 3–5; explain briefly why each is worth practicing, draft a strong
+spoken answer from the available evidence, and confirm the complete entry before
+saving. Merge duplicates. If a requested question belongs to a different module, ask
+whether the learner wants to expand the scope.
 
-Save confirmed pairs in `review/interview.md`, one file per Learning Workspace, grouped
-by module. Keep the file to questions and reference answers only. Do not save the
-learner's practice answers. If no durable workspace is identified, keep the confirmed
-material in the conversation instead of inventing a path.
+Save confirmed entries in `review/interview.md`, one file per Learning Workspace,
+grouped by module. Each entry contains only the question, a brief reason it is worth
+practicing, and the reference answer. Do not save the learner's practice answers. If no
+durable workspace is identified, keep the confirmed material in the conversation
+instead of inventing a path.
 
 Reuse saved Q&A for the same scope. Refresh only when the learner asks: compare the
 existing set with the new material, propose additions or edits, and save only after the
