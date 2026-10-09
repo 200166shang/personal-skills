@@ -61,49 +61,87 @@ speaker's full line of thought from the script.
 
 When the user supplies a directory or asks to process multiple lessons:
 
+For a single transcript file, continue to use the complete single-lesson workflow in
+this skill directly. Directory mode changes only how independent lesson tasks are
+scheduled; it does not change the content, depth, or output requirements of any lesson.
+
 1. Build an inventory mapping each in-scope lesson to its canonical transcript and
-   unique output path. Track pending, drafting, drafted, needs_review, audited, excluded,
-   and blocked states. Keep user-confirmed rejected drafts as excluded entries; do not
-   pass them to writers or reviewers.
+   unique output path. Track each lesson as `pending`, `writing`, `needs_review`,
+   `passed`, `needs_repair`, `blocked`, `failed`, or `excluded`. Keep user-confirmed rejected
+   drafts as excluded entries; do not read or pass them to writers or reviewers. For a
+   multi-session batch, keep this inventory in a small Markdown progress file beside the
+   outputs (reuse an existing inventory when available); record the source, output,
+   status, and the exact reviewer findings or a concise failure note. Keep source
+   locations for findings so repair can resume after a context change. Preserve any
+   partial draft or numbered chunks from a failed lesson and record where processing
+   stopped. Do not make a failed lesson look complete, and do not rewrite a lesson
+   already marked `passed` just because another lesson failed.
 2. Treat each complete lesson as one independent work item. Use no more than three
    active subagents at once, including writers and reviewers, and respect a lower host
-   limit. Assign one whole lesson and one unique output file to each writer. Give the
-   writer only that lesson's canonical transcript, relevant title metadata, output
-   path, and this fidelity contract. Do not split one lesson among multiple writers.
-   If subagents are unavailable, process lessons sequentially.
+   limit. Assign one whole lesson and one unique output file to each writer. The
+   orchestrator maps source files and metadata, assigns paths, and tracks status; it does
+   not read or analyze lesson prose, summarize, edit, or draft lesson content, and it
+   does not rewrite a writer's completed script. Give each writer
+   only that lesson's complete canonical transcript, relevant title metadata, unique
+   output path, and a direct reference to this complete `SKILL.md`. Tell the writer to
+   follow the full single-lesson workflow in this skill, including source resolution,
+   fidelity, speech cleanup, Markdown shape, and source-to-script audit. Do not replace
+   these rules with a shorter fidelity summary. If the writer cannot read the skill by
+   reference, include the full applicable single-lesson rules in its task instructions.
+   The writer must save the complete script to the assigned output path and return its
+   path, status, and unresolved source questions; a summary returned to the orchestrator
+   is not a deliverable. Do not split one lesson among multiple writers. If subagents
+   are unavailable, process lessons sequentially with the same full single-lesson
+   workflow and report that context isolation was unavailable.
 3. For video-only inputs, finish ASR before script writing. Local ASR shares the
    machine's memory and compute resources; begin with one video and increase concurrency
    only when measured throughput and memory use remain stable. Do not assume three ASR
    jobs will be faster than one.
-4. After drafts are ready, start one read-only reviewer in a fresh context and reuse
-   it for up to three successive review batches. Start with up to three medium-length
-   lessons per batch; use one lesson for a long source, or fewer whenever needed. The
-   actual batch limit is reached when all source/draft pairs plus room for findings no
-   longer fit in the reviewer's usable context. Reduce the batch before sending it;
-   never send a batch that requires truncating or sampling a source. Reset the reviewer
-   sooner if capacity is running low, material from different lessons begins to
-   interfere, or per-file boundaries become unreliable. Each lesson still receives its
-   own full source-to-script check. Give the reviewer only canonical plain-text
-   transcripts and their new drafts; add subtitle or audio material only for a specific
-   recognition issue. Never include rejected drafts or unrelated lessons.
-5. Require a per-lesson result: PASS (no material omission or unsupported addition),
-   FIX (specific omission or unsupported text with source location), or UNCERTAIN
-   (a source phrase that needs targeted resolution, with its source location or time
-   range). The reviewer reports findings; it does not rewrite passing scripts or
-   summarize a whole batch into one deliverable.
-6. Send only FIX or UNCERTAIN items for repair. Recheck the affected passage and enough
-   surrounding context to preserve order and meaning. Repeat a full audit only if the
-   repair changes the structure or multiple sections. Mark a lesson audited only after
-   every finding is resolved. If no independent reviewer is available, compare the
-   full source and draft directly; a writer's assertion that it checked its work is
-   not by itself the audit.
-7. If the current context cannot support complete reading, drafting, and checking for
-   every lesson, continue in bounded batches or separate work sessions. Never claim the
-   whole directory is done while any in-scope lesson remains pending, drafted, or
-   needs_review.
-8. Keep inventories and coverage ledgers for checking only; do not include them in the
-   lecture scripts. Report output paths, excluded items when relevant, and any sources
-   that could not be processed.
+4. After a writer saves a draft, mark that lesson `needs_review` and create one new,
+   read-only reviewer context for that lesson alone. Never reuse a reviewer across
+   lessons or send it another lesson. Give it that lesson's complete canonical source,
+   complete draft, relevant title metadata, and any targeted subtitle/audio material
+   needed to resolve a recognition issue. The reviewer must read and compare the full
+   source and full draft from beginning to end, covering every part in order; if
+   necessary, do this by reviewing all ordered segments within this lesson. Do not
+   substitute summaries, excerpts, or random samples. Keep the source and draft paired
+   only for this lesson. The reviewer reports findings and never edits the output.
+5. Require one result per lesson: `PASS` (no material omission or unsupported addition),
+   `FIX` (specific omission or unsupported text with source location), or `UNCERTAIN`
+   (a source phrase that needs targeted resolution, with source location or time range).
+   Check explanations, examples, parameters, numbers, reasoning, qualifications, and
+   meaningful repetition as well as the overall order. Check that every material claim
+   in the draft is supported by the source. Do not mark the lesson `passed` until review
+   returns `PASS` and all findings are resolved.
+6. Route only `FIX` or `UNCERTAIN` lessons for targeted repair. The repair writer receives
+   the same complete single-lesson rules, the full source, current draft, and specific
+   findings; it changes only the affected material and saves the repaired output. The
+   reviewer then rechecks the repair with enough surrounding context to confirm order
+   and meaning. Use that lesson's reviewer for its repair recheck; never reuse that
+   reviewer for another lesson. Repeat the full audit only when a repair changes the
+   structure or multiple sections. A writer's own assertion is not an independent audit.
+   If the environment has no independent reviewer, perform a sequential full
+   source-to-script comparison and disclose that reviewer isolation was unavailable.
+7. For a long lesson that cannot be handled at once, the writer and reviewer process
+   ordered, contiguous source/draft segments with enough overlap to resolve sentence
+   breaks and argument joins. Cover every segment; never sample or skip material. Keep
+   a coverage ledger and save numbered source/draft chunks, reviewer findings, and
+   progress notes as recoverable temporary files in a task work directory until the
+   final audit passes. At each join, check both sides for omissions and overlap-caused
+   mechanical repeats.
+   Merge by concatenating the reviewed parts, removing only mechanical overlap,
+   standardizing Markdown, and repairing local transitions. Do not rewrite or summarize
+   the merged lesson. Compare the merged draft against the complete source once more.
+8. If the context cannot support all in-scope lessons in one session, continue in
+   bounded batches or a later session using the saved inventory and temporary work.
+   Preserve passed outputs and statuses; resume only pending, writing, needs_review,
+   needs_repair, failed, blocked, or otherwise unresolved lessons. Never claim the
+   directory is complete while any in-scope lesson
+   remains pending, writing, needs_review, needs_repair, blocked, or failed.
+9. Keep inventories and coverage ledgers for checking only; do not include them in the
+   lecture scripts. Report each output path, its final status, excluded items when
+   relevant, any source that could not be processed, and any limit on reviewer
+   independence. A failed lesson must retain a concise reason in the progress record.
 
 ## Clean the speech without shortening its meaning
 
