@@ -18,6 +18,8 @@ Recommend one primary Skill and stop.
   practice explaining its solution and implementation -> recommend `learning-review`.
 - Apply saved understanding in an exercise, code task, trace, prediction, or reasoning
   problem -> recommend `learning-practice`.
+- Add, list, update, or remove materials saved for a Learning Workspace -> recommend
+  `learning-library`.
 - Find external documentation, source code, demos, articles, talks, videos, courses, or
   other learning materials -> recommend `learning-resources`.
 - Snapshot or refresh a Question graph into a Topic Compass, or generate coherent Topic

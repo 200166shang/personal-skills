@@ -41,6 +41,67 @@ workspace must be created, updated, or resumed.
   then read its `thread.yaml` and current note. Follow parent links only as far as the
   present question requires.
 
+## Reuse prior learning context
+
+When the learner starts a new module, explicitly asks to reuse earlier learning, or
+asks a question that clearly builds on another studied module, look for relevant
+Learning Workspaces in the current learning collection. Use a path or collection the
+learner supplied; otherwise infer the collection only when the current workspace's
+parent directory clearly groups Learning Workspaces. Check direct candidates for
+existing Learning markers such as `root-compass.yaml`. If the collection boundary or
+candidate locations are unclear, continue with the available context instead of
+searching the repository or filesystem broadly. A learner-named workspace may be
+looked up outside the current collection.
+
+Discover progressively: use workspace names and `organized/compass.md` to narrow the
+search, read only relevant Topic articles, and use `root-compass.yaml`, the matching
+Root's `thread.yaml`, and its Question notes when no suitable Topic exists. Do not
+load every Question or use `review/interview.md` as a default knowledge source. Reuse
+what is useful as background, focus integrated questions on the new mechanism and
+connections, and respect requests to start fresh or avoid prior material. A concrete
+question remains answerable without a discovery preamble; prior notes may inform the
+answer when they materially help. Similarity alone never blocks a repeat explanation,
+deeper exploration, or Question recording.
+
+Keep cross-workspace reuse contextual: do not add global indexes, dependency graphs,
+cross-workspace IDs, or new fields to the Root and Question data. Historical workspaces
+are read-only during the current learning task. If useful, cite an existing note using
+the ordinary Markdown link rules in [the recording contract](references/recording.md).
+
+## Use the current workspace Library
+
+The `learning-library` Skill owns `library/**`; Learn reads its catalog and original
+sources but does not edit them.
+
+When the learner asks to use registered materials, refers to a newly added source, or
+requests a source-led Root Compass, read the current workspace's `library/index.md` and
+inspect only the relevant original files or URLs. The index locates sources; it does
+not establish their detailed contents. A concrete question can still be answered from
+a directly supplied source without first creating a Library entry.
+
+When the learner asks to expand an existing Root Compass from Library materials:
+
+1. Resolve the specified `M###` entries or the new sources identified in the current
+   conversation. Do not infer newness by scanning files or timestamps.
+2. Read the existing `root-compass.yaml`. Use Root titles, relevant Root-local
+   `thread.yaml` files, and the Topic Compass when present to understand current scope.
+   Read Question notes or Topic articles only where needed to decide whether the
+   material adds a distinct learning direction.
+3. Decide whether the material opens a new direction, deepens an existing Root, or
+   supports a concrete Question without changing the Root Compass. A new source alone
+   does not require a new Root.
+4. Present proposed Root candidates with a short reason and explain which existing
+   Root could cover the material. After the learner accepts, append candidates to
+   `root-compass.yaml` using the next unused stable Root IDs and `status: candidate`.
+   Preserve all existing IDs, paths, statuses, and Question graphs. Candidate Roots
+   have no `path` and no directory until the learner selects and activates one under
+   the [recording contract](references/recording.md).
+
+Adding Library material does not itself create a Question, activate a Root, or update
+`organized/`. Record only questions the learner actually pursues. When a recorded
+explanation relies on a Library source, cite its original file or URL and the useful
+section or location; a Library ID alone is only a catalog reference.
+
 ## Teach
 
 Teach for understanding, not for template completion. Answer like a normal high-quality
