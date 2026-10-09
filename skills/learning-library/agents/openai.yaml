@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning: Library"
+  short_description: "Manage saved materials for a learning topic"
+  default_prompt: "Use $learning-library to add, list, update, or remove materials for this learning topic."
+policy:
+  allow_implicit_invocation: false

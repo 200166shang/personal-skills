@@ -153,6 +153,11 @@ source-specific questions, distinguish evidence from general explanation and rec
 concepts to the relevant code or data. Markdown must not duplicate Root status,
 Question parent links, or current-position metadata.
 
+When an explanation relies on a Library entry, preserve a useful locator to the
+original file or URL and, when available, its relevant section, page, or code location.
+Use a valid Markdown-relative path for a workspace-local file. The Library ID can
+identify the catalog entry, but is not a substitute for the source locator.
+
 ## Topics and continued learning
 
 Topics are replaceable projections across one or many Roots. Learn never mutates

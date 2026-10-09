@@ -63,10 +63,44 @@ question remains answerable without a discovery preamble; prior notes may inform
 answer when they materially help. Similarity alone never blocks a repeat explanation,
 deeper exploration, or Question recording.
 
-Keep reuse contextual: do not add global indexes, dependency graphs, cross-workspace
-IDs, or other persistent reuse state. Historical workspaces are read-only during the
-current learning task. If useful, cite an existing note using the ordinary Markdown
-link rules in [the recording contract](references/recording.md).
+Keep cross-workspace reuse contextual: do not add global indexes, dependency graphs,
+cross-workspace IDs, or new fields to the Root and Question data. Historical workspaces
+are read-only during the current learning task. If useful, cite an existing note using
+the ordinary Markdown link rules in [the recording contract](references/recording.md).
+
+## Use the current workspace Library
+
+The `learning-library` Skill owns `library/**`; Learn reads its catalog and original
+sources but does not edit them.
+
+When the learner asks to use registered materials, refers to a newly added source, or
+requests a source-led Root Compass, read the current workspace's `library/index.md` and
+inspect only the relevant original files or URLs. The index locates sources; it does
+not establish their detailed contents. A concrete question can still be answered from
+a directly supplied source without first creating a Library entry.
+
+When the learner asks to expand an existing Root Compass from Library materials:
+
+1. Resolve the specified `M###` entries or the new sources identified in the current
+   conversation. Do not infer newness by scanning files or timestamps.
+2. Read the existing `root-compass.yaml`. Use Root titles, relevant Root-local
+   `thread.yaml` files, and the Topic Compass when present to understand current scope.
+   Read Question notes or Topic articles only where needed to decide whether the
+   material adds a distinct learning direction.
+3. Decide whether the material opens a new direction, deepens an existing Root, or
+   supports a concrete Question without changing the Root Compass. A new source alone
+   does not require a new Root.
+4. Present proposed Root candidates with a short reason and explain which existing
+   Root could cover the material. After the learner accepts, append candidates to
+   `root-compass.yaml` using the next unused stable Root IDs and `status: candidate`.
+   Preserve all existing IDs, paths, statuses, and Question graphs. Candidate Roots
+   have no `path` and no directory until the learner selects and activates one under
+   the [recording contract](references/recording.md).
+
+Adding Library material does not itself create a Question, activate a Root, or update
+`organized/`. Record only questions the learner actually pursues. When a recorded
+explanation relies on a Library source, cite its original file or URL and the useful
+section or location; a Library ID alone is only a catalog reference.
 
 ## Teach
 
