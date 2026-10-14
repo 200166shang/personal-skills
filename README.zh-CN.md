@@ -22,8 +22,9 @@
 
 ## Skills
 
-本仓库是个人 Learning skills 的唯一维护来源：
+本仓库是以下个人 skills 的唯一维护来源：
 
+- `daily-journal`：记录、增量修改和查询 Obsidian 日记，统计深度学习时长并惰性归档历史月份。通过 `$daily-journal` 调用并提供 Vault 路径。
 - `learning`：根据意图选择学习工作流。
 - `learning-plan`：用一个简短 Markdown 状态页记录长期方向、当前主线、学习书签、下一步和暂缓主题。
 - `learning-library`：管理某个学习主题目录中的资料。

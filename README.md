@@ -22,8 +22,9 @@ More complex projects with their own architecture, release cycle, or long-term r
 
 ## Skills
 
-The repository is the source of truth for the personal Learning skills:
+The repository is the source of truth for these personal skills:
 
+- `daily-journal` — records, corrects, and reads Obsidian diaries with deep-learning time totals and lazy monthly archiving. Use `$daily-journal` with a supplied Vault path.
 - `learning` — routes to an explicit learning workflow.
 - `learning-plan` — keeps a small Markdown state page for long-term direction, current focus, resume bookmark, next step, and deferred topics.
 - `learning-library` — manages materials saved for a Learning Workspace.
