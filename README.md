@@ -80,6 +80,19 @@ The installer resolves skill paths into `$CODEX_HOME/agents/video_notes_operator
 
 Example request: “Use video_notes_operator to create illustrated notes from this video: URL.” A course page containing multiple lessons requires choosing the intended scope. The [agent template](agents/video_notes_operator.toml.in) owns the routing and defaults; detailed processing remains in the skills. Codex custom agents use [standalone TOML files](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agents); start a new chat if the current session has not discovered the new agent.
 
+
+## Batch illustrated notes
+
+`video-notes-batch` dispatches prepared local lessons to fresh single-lesson writers
+and independent reviewers. It uses the caller's existing agent, with at most two
+active children, persistent claims, checkpoints, hash-bound reviews and a course
+index. It does not download, transcribe or install an agent. Use download/ASR skills
+separately, then provide a local manifest. Read the
+[batch skill](skills/video-notes-batch/SKILL.md) for commands and host adapters.
+Python 3.10+ on macOS/Linux and a host capable of fresh child contexts are required;
+`video-notes` and `video-frames` remain the single-lesson production tools. Claude
+Code has an adapter guide; live verification is reported separately.
+
 ## License
 
 License information will be added later.

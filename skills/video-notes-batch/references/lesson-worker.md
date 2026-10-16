@@ -1,0 +1,11 @@
+# Single-lesson writer
+
+Read the supplied `task.json`. Own only `attempt_dir`; other writers are active, so preserve their files. Process this one local lesson, and return only a result JSON path with brief status. The coordinator owns queue state and publication.
+
+1. Locate and read `video-notes` and `video-frames` through the host's skill inventory. Follow their contracts. Verify video/transcript correspondence at beginning, middle and end, retaining evidence. Use task.mode; default faithful retains the speaker's expressions, examples, reasons and original sequence.
+2. Use task.job_dir for preparation/window progress; task.delivery_dir for the completed output. Process the full video. If resume_from exists, use the copied job already in job_dir, including preparation settings, reviewed chunks and bookmark. For repairs, read previous_review.findings and the existing full draft, then revalidate affected windows/figures and rebuild the delivery.
+3. Read every source window and view corresponding previews. Use `video-frames` for contact sheets and final captures, viewing every accepted screenshot. Keep sources' complete speech content; correct clear ASR mistakes using audiovisual evidence. Mark uncertainty instead of inventing missing facts. Keep all final figure markers, captures and plan aligned. Do not replace later source windows with brief summaries to fit context.
+4. Merge reviewed chunks without a second summarization. Assemble, render and validate using task.notes_cli. Preserve full source timing and part URL. Check portable images and HTML. Record browser/image capability limitations honestly; do not bypass denied browser protocols. Complete semantic/image review is required even if browser preview is unavailable.
+5. Copy task.result_template to `attempt_dir/result.json`, adding `status: "drafted"` when the full delivery is ready. If context is getting full, finish/save the current window, add `status: "checkpoint"` and an exact `bookmark`, and return. If blocked, use `status: "failed"`, `error`, and `needs_attention: true` for external conditions. Do not self-approve or claim the next lesson.
+
+The CLI reads the task-defined directories, not arbitrary paths supplied in the result. It checks the current single-lesson output before assigning independent review.
