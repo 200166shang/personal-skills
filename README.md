@@ -65,3 +65,10 @@ npx -y skills update yt-dlp-download
 
 本项目不会绕过登录、付费、DRM 或账号权限限制。
 
+
+## 目录与范围下载
+
+封装新增 `catalog URL`、`download URL --playlist` 和 `--playlist-items 5:9`。
+无列表参数仍只处理单视频；范围使用列表位置而非章节标签。每项独立结果保留成功、
+失败和未尝试状态，部分失败退出非零。数据根目录仍通过子命令前的 `--data-dir PATH`
+指定。详见 Skill 的 CLI contract。仅改封装 Skill/脚本，未修改上游 yt-dlp。
