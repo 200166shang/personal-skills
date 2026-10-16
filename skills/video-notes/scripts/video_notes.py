@@ -126,7 +126,8 @@ def prepare(args):
     media_id, part = media_identity(args.source_url, video.stem)
     fingerprint = {"video_sha256": digest(video), "transcript_sha256": digest(transcript),
                    "window_seconds": args.window_seconds, "source_url": args.source_url,
-                   "title": args.title or video.stem, "start": args.start, "end": scope_end, "contract_version": 1}
+                   "title": args.title or video.stem, "start": args.start, "end": scope_end,
+                   "mode": getattr(args, "mode", "faithful"), "contract_version": 1}
     work = args.work_dir.resolve()
     work.mkdir(parents=True, exist_ok=True)
     job_file = work / "job.json"
@@ -157,7 +158,7 @@ def prepare(args):
     (work / "chunks").mkdir(exist_ok=True)
     source = {"title": fingerprint["title"], "url": args.source_url, "media_id": media_id,
               "part": part, **info, "range": {"start": scope_start, "end": windows[-1]["end"]},
-              "source_review": args.source_note}
+              "source_review": args.source_note, "mode": fingerprint["mode"]}
     job = {"schema_version": 1, "input": fingerprint, "video": str(video),
            "transcript_source": str(transcript), "normalized_sha256": digest(work / "transcript.json"),
            "source": source, "windows": windows}
@@ -176,6 +177,22 @@ def inside(root, relative):
     return path
 
 
+def fidelity_stats(job, work, text, segment_ids=None):
+    segments = read_json(work / "transcript.json")["segments"]
+    owned = set(segment_ids if segment_ids is not None else
+                [identifier for window in job["windows"] for identifier in window["segment_ids"]])
+    source = "".join(s["text"] for s in segments if s["id"] in owned)
+    body = MARKER.sub("", re.sub(r"(?m)^(?:#{1,6}\s+|>\s?).*$", "", text))
+    source_count = len(re.sub(r"\s", "", source))
+    script_count = len(re.sub(r"\s", "", body))
+    ratio = round(script_count / source_count, 3) if source_count else None
+    mode = job["input"].get("mode", "legacy")
+    return {"mode": mode, "source_characters": source_count, "script_characters": script_count,
+            "length_ratio": ratio,
+            "warning": "Large reduction: repeat the full source-to-script comparison; length does not prove fidelity"
+            if mode == "faithful" and ratio is not None and ratio < .7 else None}
+
+
 def review(args):
     work = args.work_dir.resolve()
     job = read_json(work / "job.json")
@@ -187,9 +204,10 @@ def review(args):
         raise ValueError("Write the window's Markdown chunk first")
     if not args.source_reviewed or not args.visual_reviewed or not args.note.strip():
         raise ValueError("Explicit source and visual review attestations and a review note are required")
-    window.update(status="reviewed", sha256=digest(chunk), review_note=args.note)
+    stats = fidelity_stats(job, work, chunk.read_text(), window["segment_ids"])
+    window.update(status="reviewed", sha256=digest(chunk), review_note=args.note, fidelity=stats)
     save_json(work / "job.json", job)
-    return {"ok": True, "window": window["id"], "status": "reviewed"}
+    return {"ok": True, "window": window["id"], "status": "reviewed", "fidelity": stats}
 
 
 def checked_job(work):
@@ -309,9 +327,10 @@ def assemble(args):
     shutil.copy2(work / "transcript.json", sources / "transcript.json")
     shutil.copy2(job["transcript_source"], sources / ("transcript.srt" if Path(job["transcript_source"]).suffix.lower() == ".srt" else "transcript.original.json"))
     save_json(sources / "source.json", job["source"])
-    save_json(sources / "review.json", {"windows": job["windows"], "figures": figures,
+    stats = fidelity_stats(job, work, text)
+    save_json(sources / "review.json", {"windows": job["windows"], "figures": figures, "fidelity": stats,
                                        "draft_sha256": digest(draft), "note_sha256": digest(out / "note.md")})
-    return {"ok": True, "markdown": str(out / "note.md"), "figures": len(figures)}
+    return {"ok": True, "markdown": str(out / "note.md"), "figures": len(figures), "fidelity": stats}
 
 
 def code_highlight(code, language, attrs=""):
@@ -429,7 +448,8 @@ def validate(args):
             raise ValueError("Delivered screenshot differs from visually reviewed file")
     report = {"ok": True, "scope": "structural checks; semantic and visual review are caller attestations",
               "media_id": source["media_id"], "windows": len(job["windows"]), "figures": len(refs),
-              "markdown": str(md), "html": str(out / "note.html")}
+              "markdown": str(md), "html": str(out / "note.html"),
+              "fidelity": review_data.get("fidelity", {"mode": "legacy"})}
     save_json(out / "validation.json", report)
     return report
 
@@ -445,6 +465,7 @@ def main():
     p.add_argument("--source-note", default="")
     p.add_argument("--work-dir", type=Path, required=True)
     p.add_argument("--window-seconds", type=float, default=120)
+    p.add_argument("--mode", choices=("faithful", "summary"), default="faithful")
     p.add_argument("--start", type=float, default=0)
     p.add_argument("--end", type=float)
     p.set_defaults(handler=prepare)

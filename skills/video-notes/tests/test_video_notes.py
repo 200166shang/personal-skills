@@ -112,6 +112,22 @@ class NotesTest(unittest.TestCase):
         notes.save_json(self.work / "job.json", job)
         with self.assertRaises(ValueError): notes.checked_job(self.work)
 
+    def test_faithful_default_and_mode_change_rejects_old_drafts(self):
+        job = notes.read_json(self.work / "job.json")
+        self.assertEqual(job["input"]["mode"], "faithful")
+        self.assertEqual(job["source"]["mode"], "faithful")
+        self.args.mode = "summary"
+        with self.assertRaises(ValueError): notes.prepare(self.args)
+        self.assertEqual(notes.read_json(self.work / "job.json")["input"]["mode"], "faithful")
+
+    def test_reduction_signal_excludes_heading_and_figure_padding(self):
+        job = notes.read_json(self.work / "job.json")
+        result = notes.fidelity_stats(job, self.work, "# 很长的标题并不是正文\n> 来源元信息不是正文\n<!-- figure:f001 -->\n短")
+        self.assertEqual(result["script_characters"], 1)
+        self.assertIsNotNone(result["warning"])
+        job["input"]["mode"] = "summary"
+        self.assertIsNone(notes.fidelity_stats(job, self.work, "短")["warning"])
+
 
 if __name__ == "__main__":
     unittest.main()

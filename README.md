@@ -35,7 +35,7 @@ The repository is the source of truth for these personal skills:
 - `learning-organize` — organizes pursued questions into topic articles.
 - `learning-transcript` — turns ASR files into faithful lecture scripts.
 - `video-frames` — creates time-labelled video contact sheets and extracts selected screenshots.
-- `video-notes` — uses the calling model to organize a video transcript and screenshots into Markdown and offline HTML notes.
+- `video-notes` — preserves the complete lecture's voice, substance and order in illustrated Markdown and offline HTML; summarizes only on explicit request.
 
 Maintain these skills in this repository. Their complete directories, including any
 `agents/` metadata and `references/`, are managed as a unit.
@@ -68,7 +68,7 @@ npx --yes github:200166shang/personal-skills
 
 ## Dedicated video-note agent
 
-`video_notes_operator` turns a YouTube/Bilibili/Xiaoetong link or local video into illustrated Markdown and offline HTML notes. A bare video input requests the complete selected video. It inherits the calling model and reuses existing media/transcripts.
+`video_notes_operator` turns a YouTube/Bilibili/Xiaoetong link or local video into a faithful illustrated lecture script in Markdown and offline HTML. A bare input requests the complete lecture in the speaker's voice and order, with speech cleanup rather than condensation. Ask explicitly for summary mode when desired. It inherits the calling model and reuses existing media/transcripts.
 
 With `yt-dlp-download`, `xiaoetong-download`, `local-whisper`, `video-frames` and `video-notes` already installed, run:
 

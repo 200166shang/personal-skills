@@ -6,6 +6,7 @@ Run `scripts/video-notes --help` and each subcommand's help for arguments. These
 prepare --video PATH --transcript PATH --work-dir PATH
         [--source-url URL] [--title TEXT] [--source-note TEXT]
         [--window-seconds 120] [--start 0] [--end SECONDS]
+        [--mode faithful|summary]
 review --work-dir PATH --window w001 --source-reviewed --visual-reviewed --note TEXT
 assemble --draft PATH --plan PATH --captures PATH --output-dir PATH
 render --markdown PATH --output-dir PATH
@@ -20,7 +21,9 @@ The work directory contains `job.json`, `transcript.json`, `note-plan.json`, and
 
 Write each chunk to its job-defined path, then call `review` after reading source and viewing previews. The command hashes the draft and stores the review note. If a chunk changes, review it again. Record media/subtitle matching with `--source-note` initially or update `job.source.source_review` once evidence is available. Do not mark pending windows reviewed merely to satisfy validation.
 
-Re-running `prepare` on identical inputs returns a cache hit. Changed media, source transcript, normalization, title, range or window size rejects reuse; select a new directory. This preserves previous drafts rather than guessing how to invalidate them. CSS-only edits require only rendering again.
+Re-running `prepare` on identical inputs returns a cache hit. Mode defaults to `faithful`; use `summary` only for explicit condensation requests. Mode is part of the input fingerprint and source metadata. Changed media, source transcript, normalization, title, range, mode or window size rejects reuse; select a new directory. Old jobs without mode are legacy jobs, not silently certified as faithful. This preserves previous drafts rather than guessing how to invalidate them. CSS-only edits require only rendering again.
+
+`review` and `assemble` record source/script non-whitespace character counts (excluding Markdown headings, blockquote metadata and figure markers from the script), length ratio and a warning when faithful text is below 70% of the source length. A warning requires the caller to repeat the complete comparison and explain justified removals. Counts do not establish semantic coverage; a longer script can still omit content, and short source windows can legitimately consist mostly of speech noise. Blockquoted source text is also excluded by this conservative heuristic. The structural validator returns these audit signals without claiming an automatic fidelity verdict.
 
 ## Writing and figure plan
 

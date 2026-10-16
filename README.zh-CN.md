@@ -35,7 +35,7 @@
 - `learning-organize`：把已探索的问题组织成主题文章。
 - `learning-transcript`：将 ASR 文件整理为忠实讲稿。
 - `video-frames`：生成带时间标记的视频预览图，并提取指定时刻的截图。
-- `video-notes`：由调用模型组织转写与配图，输出 Markdown 和可离线阅读的 HTML 笔记。
+- `video-notes`：保留完整讲述、讲者视角和原顺序，清理口语并配图，输出 Markdown 和离线 HTML；仅在明确要求时生成摘要。
 
 在本仓库维护完整 skill 目录，包括可选的 `agents/` 元数据和 `references/`。不在其他项目或本机安装目录维护另一份副本。
 
@@ -63,7 +63,7 @@ npx --yes github:200166shang/personal-skills
 
 ## 专用视频笔记智能体
 
-`video_notes_operator` 接收 YouTube、哔哩哔哩、小鹅通链接或本地视频，默认生成完整视频的图文 Markdown 和离线 HTML。它继承调用方模型，优先复用已有媒体和转写。
+`video_notes_operator` 接收 YouTube、哔哩哔哩、小鹅通链接或本地视频，默认生成忠实图文讲稿：保留原讲述顺序、讲者视角和完整内容，只清理口语及明确识别错误，输出 Markdown 和离线 HTML。需要归纳版时明确要求“总结／提炼”。它继承调用方模型，优先复用已有媒体和转写。
 
 已安装 `yt-dlp-download`、`xiaoetong-download`、`local-whisper`、`video-frames`、`video-notes` 后运行：
 
