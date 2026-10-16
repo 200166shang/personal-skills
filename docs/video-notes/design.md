@@ -16,6 +16,8 @@ Assemble the Markdown, render portable HTML and run structural validation. The d
 
 Unchanged inputs can reuse a job. Changed source, mode, normalization or preparation settings require a new work directory, preserving previous work. Styling changes can rerender without rewriting content. Automatic checks verify file/source relationships; window review and final-image acceptance are caller judgments, not semantic proofs. Character ratios are audit signals, not coverage guarantees.
 
+Authors and independent reviewers execute the [structure and HTML checklist](../../skills/video-notes/references/presentation-review.md): topic subheadings, complete Markdown/HTML correspondence and actual page inspection. Record presentation observations separately from content/image review and disclose unavailable browser checks. Observed presentation defects require repair; browser unavailability alone remains a limitation rather than a claim of tested usability. The CLI continues to enforce structural relationships, not these caller judgments.
+
 ## Authoritative runtime references
 
 - [Note Skill](../../skills/video-notes/SKILL.md), [output contract](../../skills/video-notes/references/output-contract.md), [style](../../skills/video-notes/references/note-style.md).
