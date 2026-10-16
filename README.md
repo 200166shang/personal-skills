@@ -66,6 +66,20 @@ Once these changes are merged into `main`, the skills can also be installed dire
 npx --yes github:200166shang/personal-skills
 ```
 
+## Dedicated video-note agent
+
+`video_notes_operator` turns a YouTube/Bilibili/Xiaoetong link or local video into illustrated Markdown and offline HTML notes. A bare video input requests the complete selected video. It inherits the calling model and reuses existing media/transcripts.
+
+With `yt-dlp-download`, `xiaoetong-download`, `local-whisper`, `video-frames` and `video-notes` already installed, run:
+
+```bash
+node bin/install-video-notes-agent.mjs
+```
+
+The installer resolves skill paths into `$CODEX_HOME/agents/video_notes_operator.toml`, validates the five skill definitions and leaves other agents unchanged. Use `--skills-dir PATH` for another skill directory, `--dry-run` to inspect the resolved configuration, and `--force` to back up and replace only this agent. This repository supplies the two video skills; install the acquisition/ASR skills separately if missing. It does not download them automatically.
+
+Example request: “Use video_notes_operator to create illustrated notes from this video: URL.” A course page containing multiple lessons requires choosing the intended scope. The [agent template](agents/video_notes_operator.toml.in) owns the routing and defaults; detailed processing remains in the skills. Codex custom agents use [standalone TOML files](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agents); start a new chat if the current session has not discovered the new agent.
+
 ## License
 
 License information will be added later.

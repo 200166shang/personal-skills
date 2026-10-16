@@ -61,6 +61,20 @@ node bin/install.mjs --force
 npx --yes github:200166shang/personal-skills
 ```
 
+## 专用视频笔记智能体
+
+`video_notes_operator` 接收 YouTube、哔哩哔哩、小鹅通链接或本地视频，默认生成完整视频的图文 Markdown 和离线 HTML。它继承调用方模型，优先复用已有媒体和转写。
+
+已安装 `yt-dlp-download`、`xiaoetong-download`、`local-whisper`、`video-frames`、`video-notes` 后运行：
+
+```bash
+node bin/install-video-notes-agent.mjs
+```
+
+安装器检查五个技能，将实际路径写入 `$CODEX_HOME/agents/video_notes_operator.toml`，不改其他智能体。支持 `--skills-dir PATH` 指定技能目录、`--dry-run` 预览配置、`--force` 在备份后只替换此智能体。本仓库提供两个视频技能；缺少的下载和 ASR 技能需单独安装，安装器不会自动下载。
+
+以后可以说：“请用 video_notes_operator 把这个视频做成图文笔记：链接。”本地视频同样直接提供路径。课程页有多个课时时，先选择所需课时。[配置模板](agents/video_notes_operator.toml.in)维护来源路由和默认行为，具体操作规则继续由各 Skill 维护。配置采用[官方自定义智能体 TOML 形式](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agents)；当前会话尚未发现新智能体时，可新开聊天后调用。
+
 ## License
 
 License 信息后续补充。
