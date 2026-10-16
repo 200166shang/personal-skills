@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+skill_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+if ! command -v uv >/dev/null 2>&1; then
+  printf '%s\n' '{"ok":false,"error":"uv is required"}'
+  exit 2
+fi
+lock_id=$(cksum < "$skill_root/runtime/uv.lock" | cut -d ' ' -f 1)
+export UV_PROJECT_ENVIRONMENT="${XDG_CACHE_HOME:-$HOME/.cache}/personal-skills/video-notes/$lock_id"
+export PYTHONDONTWRITEBYTECODE=1
+exec uv run --frozen --project "$skill_root/runtime" python -B "$skill_root/scripts/video_notes.py" "$@"

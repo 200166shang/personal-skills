@@ -1,0 +1,4 @@
+interface:
+  display_name: "Video Frames"
+  short_description: "Browse video contact sheets and extract timestamped screenshots"
+  default_prompt: "Use $video-frames to inspect this video's relevant time range and extract the selected frames."

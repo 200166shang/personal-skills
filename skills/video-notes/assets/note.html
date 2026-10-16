@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="assets/note.css">
+</head>
+<body>
+  <aside class="sidebar"><a class="brand" href="#">视频手记<span>VIDEO NOTES</span></a><nav aria-label="目录">{{toc}}</nav></aside>
+  <main><div class="eyebrow">观看 · 理解 · 实践</div><article>{{body}}</article><footer>图文笔记 · 点击图片查看大图 · 时间链接可回到原视频</footer></main>
+  <dialog id="lightbox" aria-label="截图大图"><button aria-label="关闭大图">关闭 ×</button><img alt=""></dialog>
+  <script>
+    const box = document.querySelector('#lightbox');
+    document.querySelectorAll('article img').forEach(image => {
+      image.tabIndex = 0;
+      const show = () => { box.querySelector('img').src = image.src; box.querySelector('img').alt = image.alt; box.showModal(); };
+      image.addEventListener('click', show);
+      image.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); show(); } });
+    });
+    box.querySelector('button').onclick = () => box.close();
+    box.addEventListener('click', event => { if (event.target === box) box.close(); });
+  </script>
+</body>
+</html>

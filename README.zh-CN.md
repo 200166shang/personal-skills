@@ -34,8 +34,12 @@
 - `learning-resources`：整理外部学习资料。
 - `learning-organize`：把已探索的问题组织成主题文章。
 - `learning-transcript`：将 ASR 文件整理为忠实讲稿。
+- `video-frames`：生成带时间标记的视频预览图，并提取指定时刻的截图。
+- `video-notes`：由调用模型组织转写与配图，输出 Markdown 和可离线阅读的 HTML 笔记。
 
 在本仓库维护完整 skill 目录，包括可选的 `agents/` 元数据和 `references/`。不在其他项目或本机安装目录维护另一份副本。
+
+视频技能需要 `uv`、Python 3.11–3.13（由 uv 管理）和 FFmpeg/FFprobe。锁定的 Python 环境位于用户缓存目录。工具不调用模型 API；调用智能体需具备文件读写、查看图片和执行命令的能力。下载、ASR 仍使用独立工具。详见[媒体智能体接入](research/media-operator-video-notes.md)和[案例验证](research/video-notes-case-validation.md)。
 
 ## 安装
 

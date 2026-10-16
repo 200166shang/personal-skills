@@ -1,0 +1,4 @@
+interface:
+  display_name: "Video Notes"
+  short_description: "Create readable illustrated Markdown and offline HTML video notes"
+  default_prompt: "Use $video-notes with this video and timestamped transcript to create readable illustrated notes and portable HTML."
