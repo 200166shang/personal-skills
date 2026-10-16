@@ -79,8 +79,9 @@ class BatchTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.b.initialize(m, self.root/'work', self.root/'out', labels=['2.1'])
         self.assertFalse((self.root/'work').exists())
-        with self.assertRaises(ValueError):
-            self.b.initialize(m, self.root/'work', self.root/'out', labels=['9.9'])
+        for labels in (['9.9'], [], ['']):
+            with self.assertRaises(ValueError):
+                self.b.initialize(m, self.root/'work', self.root/'out', labels=labels)
 
     def test_result_requires_dispatch_evidence(self):
         self.init()
@@ -228,6 +229,21 @@ class BatchTests(unittest.TestCase):
         (flat/'Course p05 2.1 GPIO [BVexample_p5].mp4').write_bytes(b'video')
         (flat/'transcript.srt').write_text('source')
         self.assertEqual(self.b.scan(flat)['entries'][0]['label'], '2.1')
+
+    def test_publication_names_are_reserved_and_ids_are_portable(self):
+        manifest = self.manifest(('2.1', '2.2'))
+        raw = self.b.read(manifest)
+        for reserved in ('index.html', 'INDEX.MD', 'batch-report.json'):
+            raw['entries'][0]['id'] = reserved
+            self.b.save(manifest, raw)
+            with self.assertRaises(ValueError):
+                self.b.initialize(manifest, self.root/'work', self.root/'out')
+            self.assertFalse((self.root/'work').exists())
+        raw['entries'][0]['id'] = 'Lesson'
+        raw['entries'][1]['id'] = 'lesson'
+        self.b.save(manifest, raw)
+        with self.assertRaises(ValueError):
+            self.b.initialize(manifest, self.root/'work', self.root/'out')
 
 
 if __name__ == '__main__':

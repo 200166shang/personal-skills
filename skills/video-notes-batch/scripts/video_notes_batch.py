@@ -94,6 +94,8 @@ def sources(lesson):
 
 
 def safe_id(value):
+    if value.casefold() in {'index.html', 'index.md', 'batch-report.json'}:
+        raise ValueError(f'Lesson id collides with a course output filename: {value}')
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,99}', value):
         raise ValueError(f'Invalid lesson id: {value}')
     return value
@@ -108,9 +110,11 @@ def initialize(manifest, work, output, labels=None, mode='faithful', max_active=
     if not entries:
         raise ValueError('Empty manifest')
     ids = [safe_id(str(e['id'])) for e in entries]
-    if len(ids) != len(set(ids)):
-        raise ValueError('Duplicate lesson identities')
-    if labels:
+    if len(ids) != len({value.casefold() for value in ids}):
+        raise ValueError('Duplicate lesson identities on a case-insensitive filesystem')
+    if labels is not None:
+        if not labels or any(not label.strip() for label in labels):
+            raise ValueError('Explicit lesson selection cannot be empty')
         for label in labels:
             if sum(e.get('label') == label for e in entries) != 1:
                 raise ValueError(f'Label missing or ambiguous: {label}')
@@ -512,7 +516,7 @@ def main():
         if args.command == 'scan':
             data = scan(args.directory); save(args.output, data); result = dict(ok=True, manifest=str(args.output.resolve()), lessons=len(data['entries']))
         elif args.command == 'init':
-            result = initialize(args.manifest, args.work_dir, args.output_dir, [x.strip() for x in args.labels.split(',')] if args.labels else None, args.mode, args.max_active, args.notes_cli)
+            result = initialize(args.manifest, args.work_dir, args.output_dir, [x.strip() for x in args.labels.split(',')] if args.labels is not None else None, args.mode, args.max_active, args.notes_cli)
         elif args.command in ('status', 'next'): result = status(args.batch)
         elif args.command == 'claim': result = claim(args.batch, args.lesson, args.stage)
         elif args.command == 'attach': result = attach(args.batch, args.token, args.agent_id, args.host, args.isolation)

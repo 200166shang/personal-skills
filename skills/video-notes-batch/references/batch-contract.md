@@ -15,7 +15,7 @@ Run `scripts/video-notes-batch --help` and subcommand help. JSON stdout, nonzero
 }
 ```
 
-`id` uses letters/digits/underscore/hyphen/dot and starts with a letter/digit. IDs are unique and stable, separate from labels. Both input files must exist. JSON transcripts contain timestamped `segments`; SRT is accepted by `video-notes`. Relative paths resolve against the manifest. Identity matching is reviewed by the writer/reviewer; a hash alone does not establish that subtitles describe a video.
+`id` uses letters/digits/underscore/hyphen/dot and starts with a letter/digit. IDs are unique ignoring case and stable, separate from labels. Reserve `index.html`, `index.md` and `batch-report.json` for course outputs. Both input files must exist. JSON transcripts contain timestamped `segments`; SRT is accepted by `video-notes`. Relative paths resolve against the manifest. Identity matching is reviewed by the writer/reviewer; a hash alone does not establish that subtitles describe a video.
 
 `scan --directory DIR --output manifest.json` inventories local MP4/MKV/WebM/MOV/M4V and adjacent `<stem>.srt`, `transcript.srt`, or `<stem>.json`. Missing transcripts cause an explicit error; prepare them separately. Scan infers Bilibili part URLs only from an explicit `BV…_pN` filename/directory; inspect the inventory before init. Other platforms can supply a manifest directly. Do not pass a network catalog as if it contained downloaded media paths.
 

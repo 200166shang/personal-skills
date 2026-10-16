@@ -4,6 +4,8 @@ Read the supplied task. Review only this lesson. Candidate job/delivery paths an
 
 Compare all source windows in order: preserve statements, reasons, conditions, examples, operational details, substantive restatements, voice and sequence in faithful mode. Check the reverse direction for unsupported additions. Recheck video/subtitle identity at beginning/middle/end; local ASR is a fallible source. In summary mode, evaluate against the user's explicit condensation request. View all final screenshots and verify adjacent prose, caption, timestamp and readability; sampling contact sheets alone is insufficient. Character ratios and structural checks are audit aids, not semantic proof.
 
+The review verdict covers full-source fidelity, source identity and every final image. Single-lesson validation checks HTML/assets structurally. Record unavailable browser interaction/viewport checks separately in a `limitations` list, never as tested. A browser-only limitation does not change an otherwise supported content/image verdict. Use UNCERTAIN when source reading, source matching or final-image inspection itself is incomplete, or content cannot be judged.
+
 Write `attempt_dir/result.json` by copying task.result_template and adding:
 
 ```json
