@@ -50,4 +50,6 @@ These times and IDs are illustrative. In `draft.md`, place `<!-- figure:f001 -->
 
 `render` reads the final Markdown, creates heading anchors/TOC, copies local images if necessary, and writes `note.html`, `assets/note.css` and `render.json`. It rejects remote images, missing files and escaping asset paths. Raw HTML in Markdown is escaped. Local CSS, image zoom and code highlighting work without a server or CDN. Time links to the source need network access.
 
+Before delivery, execute the [structure and HTML review checklist](presentation-review.md). Heading coverage and Markdown/HTML correspondence are caller checks; `validate` does not detect missing topic subheadings or establish page usability. Record presentation observations separately from content/image evidence and name untested browser checks.
+
 `validate` verifies current sources/window evidence, figure plan, delivered image hashes, Markdown, HTML and CSS hashes. `validation.json` explicitly distinguishes these structural checks from the caller's semantic/visual judgments. Final delivery includes `note.md`, `note.html`, `images/`, `assets/`, original/normalized transcripts and source/review metadata under `sources/`. Source video, previews and machine-specific work state stay outside the delivery and repository.
