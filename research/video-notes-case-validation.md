@@ -2,6 +2,8 @@
 
 Date: 2026-10-16. Source: [STM32 tutorial, P2 — installing the development environment](https://www.bilibili.com/video/BV11X4y1j7si/?p=2).
 
+This record describes the original condensed-note case. The user subsequently requested fuller preservation of the lecture; [the fidelity correction](video-notes-fidelity-correction.md) changes the default and documents a separate faithful edition. The original output remains intact for comparison.
+
 ## Executed case
 
 The existing downloader resolved `BV11X4y1j7si_p2` and acquired the P2 video. FFprobe reported 1288.362 seconds total, 640×360 video, and a video track ending at 1288.200 seconds. An existing SRT had 582 cues ending at 1288.060 seconds. It was stored under an unrelated older download directory, so directory identity was not trusted. The full transcript and time-corresponding previews were read; the introduction, license dialog, compiler setup, download logs and final reset/LED demonstration matched this P2.
