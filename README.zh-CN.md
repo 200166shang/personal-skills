@@ -34,12 +34,14 @@
 - `learning-resources`：整理外部学习资料。
 - `learning-organize`：把已探索的问题组织成主题文章。
 - `learning-transcript`：将 ASR 文件整理为忠实讲稿。
+- `yt-dlp-download`：读取目录，下载授权范围内的视频、音频、指定语言字幕，支持显式列表范围。
+- `local-whisper`：使用 MLX/faster-whisper 本地转写，输出带时间戳文本，并可使用本地模型翻译字幕。
 - `video-frames`：生成带时间标记的视频预览图，并提取指定时刻的截图。
 - `video-notes`：保留完整讲述、讲者视角和原顺序，清理口语并配图，输出 Markdown 和离线 HTML；仅在明确要求时生成摘要。
 
 在本仓库维护完整 skill 目录，包括可选的 `agents/` 元数据和 `references/`。不在其他项目或本机安装目录维护另一份副本。
 
-视频技能需要 `uv`、Python 3.11–3.13（由 uv 管理）和 FFmpeg/FFprobe。锁定的 Python 环境位于用户缓存目录。工具不调用模型 API；调用智能体需具备文件读写、查看图片和执行命令的能力。下载、ASR 仍使用独立工具。详见[媒体智能体接入](research/media-operator-video-notes.md)和[案例验证](research/video-notes-case-validation.md)。
+`video-frames` 和 `video-notes` 需要 `uv`、Python 3.11–3.13（由 uv 管理）和 FFmpeg/FFprobe。锁定的 Python 环境位于用户缓存目录。工具不调用模型 API；调用智能体需具备文件读写、查看图片和执行命令的能力。下载、ASR 仍使用独立工具。详见[媒体智能体接入](research/media-operator-video-notes.md)和[案例验证](research/video-notes-case-validation.md)。
 
 ## 安装
 
@@ -49,10 +51,17 @@
 node bin/install.mjs
 ```
 
-如需用仓库版本替换已安装的同名 skill，并清除源目录中已不存在的旧文件：
+可以定向安装，重复使用 `--skill`；`--list` 仅读取列表：
 
 ```bash
-node bin/install.mjs --force
+node bin/install.mjs --skill local-whisper --skill yt-dlp-download
+node bin/install.mjs --list
+```
+
+替换指定技能时，旧版本会先保存在 `$CODEX_HOME/skill-backups/`，新副本清除不再存在的旧文件，其他已安装技能保持原样：
+
+```bash
+node bin/install.mjs --skill local-whisper --skill yt-dlp-download --force
 ```
 
 这些改动合并到 `main` 后，也可以从 GitHub 直接安装：
@@ -71,13 +80,17 @@ npx --yes github:200166shang/personal-skills
 node bin/install-video-notes-agent.mjs
 ```
 
-安装器检查五个技能，将实际路径写入 `$CODEX_HOME/agents/video_notes_operator.toml`，不改其他智能体。支持 `--skills-dir PATH` 指定技能目录、`--dry-run` 预览配置、`--force` 在备份后只替换此智能体。本仓库提供两个视频技能；缺少的下载和 ASR 技能需单独安装，安装器不会自动下载。
+安装器检查五个技能，将实际路径写入 `$CODEX_HOME/agents/video_notes_operator.toml`，不改其他智能体。支持 `--skills-dir PATH` 指定技能目录、`--dry-run` 预览配置、`--force` 在备份后只替换此智能体。本仓库提供 `yt-dlp-download`、`local-whisper`、`video-frames`、`video-notes` 和 `video-notes-batch`；小鹅通能力仍单独安装。智能体安装器不会自动安装依赖，本次迁移不会修改已有智能体配置。
 
 以后可以说：“请用 video_notes_operator 把这个视频做成图文笔记：链接。”本地视频同样直接提供路径。课程页有多个课时时，先选择所需课时。[配置模板](agents/video_notes_operator.toml.in)维护来源路由和默认行为，具体操作规则继续由各 Skill 维护。配置采用[官方自定义智能体 TOML 形式](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agents)；当前会话尚未发现新智能体时，可新开聊天后调用。
 
+## 媒体技能维护
+
+`local-whisper` 和 `yt-dlp-download` 与笔记技能集中在此维护。迁移保持原运行脚本、依赖版本和 CLI 行为不变，系统仍需 `uv` 及对应媒体工具。下载器隔离环境目前位于安装目录的 `runtime/.venv`；Whisper 使用共享 uv/模型缓存，首次使用按原机制准备依赖和模型。安装器不会复制虚拟环境、字节码或机器相关的 setup 标记。见[迁移来源与验证](research/media-skills-migration.md)。
+
 ## License
 
-License 信息后续补充。
+`skills/local-whisper/LICENSE` 保留原 MIT 许可证；本次迁移不为整个仓库新增统一许可证，其他已有声明保持原样。
 
 ## 多课图文笔记
 

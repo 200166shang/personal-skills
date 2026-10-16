@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+skill_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+runtime="$skill_root/runtime"
+
+if ! command -v uv >/dev/null 2>&1; then
+  echo '{"ok":false,"error":{"code":"missing_uv","message":"uv is required; install it before using this skill"}}' >&2
+  exit 2
+fi
+if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+  echo '{"ok":false,"error":{"code":"missing_ffmpeg","message":"ffmpeg and ffprobe are required; install FFmpeg before using this skill"}}' >&2
+  exit 2
+fi
+
+if ! "$skill_root/scripts/doctor" >/dev/null 2>&1; then
+  echo "Preparing yt-dlp-download for first use..." >&2
+  "$skill_root/scripts/setup" >&2
+fi
+
+exec uv run --offline --project "$runtime" yt-dlp-download "$@"
+

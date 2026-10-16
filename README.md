@@ -34,13 +34,15 @@ The repository is the source of truth for these personal skills:
 - `learning-resources` — curates external learning materials.
 - `learning-organize` — organizes pursued questions into topic articles.
 - `learning-transcript` — turns ASR files into faithful lecture scripts.
+- `yt-dlp-download` — reads catalogs and downloads authorized video, audio or exact-language subtitles, including explicit playlist ranges.
+- `local-whisper` — runs local MLX/faster-whisper ASR with timestamped outputs and optional local subtitle translation.
 - `video-frames` — creates time-labelled video contact sheets and extracts selected screenshots.
 - `video-notes` — preserves the complete lecture's voice, substance and order in illustrated Markdown and offline HTML; summarizes only on explicit request.
 
 Maintain these skills in this repository. Their complete directories, including any
 `agents/` metadata and `references/`, are managed as a unit.
 
-The video skills require `uv`, Python 3.11–3.13 (managed by uv), and FFmpeg/FFprobe.
+The illustrated-note tools (`video-frames` and `video-notes`) require `uv`, Python 3.11–3.13 (managed by uv), and FFmpeg/FFprobe.
 Their locked Python environments live in the user cache. They contain no model API
 client; the calling agent needs file, image-viewing and command tools. Downloads and
 ASR remain separate capabilities. See [media operator integration](research/media-operator-video-notes.md)
@@ -54,10 +56,18 @@ From a local checkout, run:
 node bin/install.mjs
 ```
 
-To replace installed copies and remove files no longer present in this repository:
+Install only selected skills (repeat `--skill`), or list available names without writing files:
 
 ```bash
-node bin/install.mjs --force
+node bin/install.mjs --skill local-whisper --skill yt-dlp-download
+node bin/install.mjs --list
+```
+
+To replace selected installed copies, preserving the previous versions under
+`$CODEX_HOME/skill-backups/` and removing stale files from the new active copies:
+
+```bash
+node bin/install.mjs --skill local-whisper --skill yt-dlp-download --force
 ```
 
 Once these changes are merged into `main`, the skills can also be installed directly from GitHub:
@@ -76,7 +86,7 @@ With `yt-dlp-download`, `xiaoetong-download`, `local-whisper`, `video-frames` an
 node bin/install-video-notes-agent.mjs
 ```
 
-The installer resolves skill paths into `$CODEX_HOME/agents/video_notes_operator.toml`, validates the five skill definitions and leaves other agents unchanged. Use `--skills-dir PATH` for another skill directory, `--dry-run` to inspect the resolved configuration, and `--force` to back up and replace only this agent. This repository supplies the two video skills; install the acquisition/ASR skills separately if missing. It does not download them automatically.
+The installer resolves skill paths into `$CODEX_HOME/agents/video_notes_operator.toml`, validates the five skill definitions and leaves other agents unchanged. Use `--skills-dir PATH` for another skill directory, `--dry-run` to inspect the resolved configuration, and `--force` to back up and replace only this agent. This repository supplies `yt-dlp-download`, `local-whisper`, `video-frames`, `video-notes` and `video-notes-batch`; install `xiaoetong-download` separately when needed. The agent installer does not install dependencies or change existing agents automatically.
 
 Example request: “Use video_notes_operator to create illustrated notes from this video: URL.” A course page containing multiple lessons requires choosing the intended scope. The [agent template](agents/video_notes_operator.toml.in) owns the routing and defaults; detailed processing remains in the skills. Codex custom agents use [standalone TOML files](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agents); start a new chat if the current session has not discovered the new agent.
 
@@ -93,6 +103,17 @@ Python 3.10+ on macOS/Linux and a host capable of fresh child contexts are requi
 `video-notes` and `video-frames` remain the single-lesson production tools. Claude
 Code has an adapter guide; live verification is reported separately.
 
+## Media skill maintenance
+
+`local-whisper` and `yt-dlp-download` are maintained here alongside the note skills.
+Their runtime scripts, dependency versions and CLI behavior are unchanged by the
+migration. `uv` and the required system media tools remain prerequisites; first-use
+setup and model caching follow each skill's instructions. Download environments currently
+live under the installed skill's `runtime/.venv`; Whisper uses shared uv/model caches.
+The installer excludes environments, bytecode and setup markers from copied skills.
+See [migration provenance and validation](research/media-skills-migration.md).
+
 ## License
 
-License information will be added later.
+`skills/local-whisper/LICENSE` retains its original MIT license. No collection-wide
+license is assigned by this migration; other existing license notices remain unchanged.
