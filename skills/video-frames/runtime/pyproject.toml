@@ -1,0 +1,8 @@
+[project]
+name = "personal-video-frames"
+version = "0.1.0"
+requires-python = ">=3.11,<3.14"
+dependencies = ["Pillow==11.3.0"]
+
+[tool.uv]
+package = false

@@ -34,9 +34,17 @@ The repository is the source of truth for these personal skills:
 - `learning-resources` — curates external learning materials.
 - `learning-organize` — organizes pursued questions into topic articles.
 - `learning-transcript` — turns ASR files into faithful lecture scripts.
+- `video-frames` — creates time-labelled video contact sheets and extracts selected screenshots.
+- `video-notes` — uses the calling model to organize a video transcript and screenshots into Markdown and offline HTML notes.
 
 Maintain these skills in this repository. Their complete directories, including any
 `agents/` metadata and `references/`, are managed as a unit.
+
+The video skills require `uv`, Python 3.11–3.13 (managed by uv), and FFmpeg/FFprobe.
+Their locked Python environments live in the user cache. They contain no model API
+client; the calling agent needs file, image-viewing and command tools. Downloads and
+ASR remain separate capabilities. See [media operator integration](research/media-operator-video-notes.md)
+for the pipeline and [case validation](research/video-notes-case-validation.md) for a tested example.
 
 ## Install
 
