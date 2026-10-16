@@ -78,3 +78,12 @@ node bin/install-video-notes-agent.mjs
 ## License
 
 License 信息后续补充。
+
+## 多课图文笔记
+
+`video-notes-batch` 接收已准备的本地视频/转写清单，通过当前智能体为每课新建
+写作者与独立审稿者；默认最多两个活跃子 Agent，支持任务领取、检查点、哈希绑定
+审稿、恢复与课程目录页。下载/转写独立执行，不安装或修改智能体。
+见[批量 Skill](skills/video-notes-batch/SKILL.md)。要求 macOS/Linux、Python 3.10+
+及宿主的新上下文子 Agent 能力；单课继续组合使用 `video-notes`、`video-frames`。
+Claude Code 提供适配说明，实际运行验证单独披露。

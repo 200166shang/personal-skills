@@ -1,0 +1,4 @@
+interface:
+  display_name: "Video Notes Batch"
+  short_description: "Isolated, resumable notes for local video lessons"
+  default_prompt: "Use $video-notes-batch to make faithful illustrated notes for these prepared lessons."
