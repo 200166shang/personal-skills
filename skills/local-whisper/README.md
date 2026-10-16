@@ -2,10 +2,12 @@
 
 Local speech-to-text for AI coding agents, with Apple Silicon-aware backend selection, clean TXT/SRT/VTT/JSON output, word timestamps, mixed-language handling, and optional local subtitle translation through Ollama.
 
+Maintained in [`personal-skills`](https://github.com/200166shang/personal-skills/tree/main/skills/local-whisper). The original repository history is retained in the collection.
+
 ## Install
 
 ```bash
-npx skills add 200166shang/local-whisper-skill@local-whisper -g -y
+npx skills add 200166shang/personal-skills --skill local-whisper -g -y
 ```
 
 This installs the Agent Skill for Codex, Claude Code, Cursor, and other clients supported by the Skills CLI. Runtime dependencies and models are resolved on first use with shared caches; they are not written into transcript output directories.

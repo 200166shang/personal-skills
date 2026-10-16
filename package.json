@@ -14,9 +14,14 @@
     "README.zh-CN.md",
     "research/media-operator-video-notes.md",
     "research/video-notes-case-validation.md",
-    "research/video-notes-fidelity-correction.md"
+    "research/video-notes-fidelity-correction.md",
+    "research/media-skills-migration.md"
   ],
-  "keywords": ["codex", "skills", "agents"],
+  "keywords": [
+    "codex",
+    "skills",
+    "agents"
+  ],
   "engines": {
     "node": ">=18"
   }

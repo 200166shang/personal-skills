@@ -4,10 +4,12 @@
 
 支持下载你有权访问的 YouTube、哔哩哔哩及其他兼容站点的视频、音频和指定语言字幕。视频默认选择最低分辨率，结果保存到临时目录。
 
+统一维护位置为 [`personal-skills`](https://github.com/200166shang/personal-skills/tree/main/skills/yt-dlp-download)，原仓库历史保留在集合仓库中。
+
 ## 安装
 
 ```bash
-npx -y skills add 200166shang/yt-dlp-download --skill yt-dlp-download -g -a codex -y
+npx -y skills add 200166shang/personal-skills --skill yt-dlp-download -g -a codex -y
 ```
 
 安装完成后，新开一个 Codex 会话。

@@ -2,10 +2,12 @@
 
 面向 AI 编码 Agent 的本地语音识别 Skill：针对 Apple Silicon 自动选择后端，稳定导出 TXT/SRT/VTT/JSON，支持词级时间戳、混合语言处理，并可通过 Ollama 在本地翻译字幕且保持原时间轴。
 
+统一维护位置为 [`personal-skills`](https://github.com/200166shang/personal-skills/tree/main/skills/local-whisper)，原仓库历史已保留在集合仓库中。
+
 ## 一行安装
 
 ```bash
-npx skills add 200166shang/local-whisper-skill@local-whisper -g -y
+npx skills add 200166shang/personal-skills --skill local-whisper -g -y
 ```
 
 首次运行会通过 `uv` 解析运行依赖并下载模型；以后复用全局缓存，不会把虚拟环境或数 GB 模型塞进转写结果目录。
