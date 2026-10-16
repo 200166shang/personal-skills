@@ -41,7 +41,7 @@
 
 在本仓库维护完整 skill 目录，包括可选的 `agents/` 元数据和 `references/`。不在其他项目或本机安装目录维护另一份副本。
 
-`video-frames` 和 `video-notes` 需要 `uv`、Python 3.11–3.13（由 uv 管理）和 FFmpeg/FFprobe。锁定的 Python 环境位于用户缓存目录。工具不调用模型 API；调用智能体需具备文件读写、查看图片和执行命令的能力。下载、ASR 仍使用独立工具。详见[媒体智能体接入](research/media-operator-video-notes.md)和[案例验证](research/video-notes-case-validation.md)。
+`video-frames` 和 `video-notes` 需要 `uv`、Python 3.11–3.13（由 uv 管理）和 FFmpeg/FFprobe。锁定的 Python 环境位于用户缓存目录。工具不调用模型 API；调用智能体需具备文件读写、查看图片和执行命令的能力。下载、ASR 仍使用独立工具。当前设计、接入说明和历史验收统一从[文档导航](docs/README.md)进入。
 
 ## 安装
 
@@ -86,7 +86,7 @@ node bin/install-video-notes-agent.mjs
 
 ## 媒体技能维护
 
-`local-whisper` 和 `yt-dlp-download` 与笔记技能集中在此维护。迁移保持原运行脚本、依赖版本和 CLI 行为不变，系统仍需 `uv` 及对应媒体工具。下载器隔离环境目前位于安装目录的 `runtime/.venv`；Whisper 使用共享 uv/模型缓存，首次使用按原机制准备依赖和模型。安装器不会复制虚拟环境、字节码或机器相关的 setup 标记。见[迁移来源与验证](research/media-skills-migration.md)。
+`local-whisper` 和 `yt-dlp-download` 与笔记技能集中在此维护。迁移保持原运行脚本、依赖版本和 CLI 行为不变，系统仍需 `uv` 及对应媒体工具。下载器隔离环境目前位于安装目录的 `runtime/.venv`；Whisper 使用共享 uv/模型缓存，首次使用按原机制准备依赖和模型。安装器不会复制虚拟环境、字节码或机器相关的 setup 标记。维护与迁移依据见[文档导航](docs/README.md)。
 
 ## License
 
@@ -100,3 +100,7 @@ node bin/install-video-notes-agent.mjs
 见[批量 Skill](skills/video-notes-batch/SKILL.md)。要求 macOS/Linux、Python 3.10+
 及宿主的新上下文子 Agent 能力；单课继续组合使用 `video-notes`、`video-frames`。
 Claude Code 提供适配说明，实际运行验证单独披露。
+
+## 开发
+
+从 [AGENTS.md](AGENTS.md) 和[文档导航](docs/README.md)开始。小修改验证后直接提 PR；跨 Skill 或多会话需求使用 GitHub Issues 中的 Spec 与自包含 Ticket，不为已完成工作补造任务。

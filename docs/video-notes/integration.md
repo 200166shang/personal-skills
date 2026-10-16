@@ -1,5 +1,7 @@
 # Media operator: video notes
 
+Status: current optional integration guidance, 2026-10-16. This file does not install or modify the user's agent. For batch requests use the separate [batch design](../video-notes-batch/design.md).
+
 The two video skills are independent of Learning workflows. Install their complete directories, preserving scripts, runtime locks, references and assets. `video-notes` locates `video-frames` through host skill discovery or a caller-supplied path. Existing downloads and ASR are reusable inputs.
 
 Default content mode is `faithful`: preserve the full lecture in the speaker's voice and original order, cleaning speech without summarization. Set `prepare --mode summary` only for an explicit condensation request. Use a new job when changing modes; an old summary is not a source for the faithful rewrite.

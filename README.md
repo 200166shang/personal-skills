@@ -45,8 +45,7 @@ Maintain these skills in this repository. Their complete directories, including 
 The illustrated-note tools (`video-frames` and `video-notes`) require `uv`, Python 3.11–3.13 (managed by uv), and FFmpeg/FFprobe.
 Their locked Python environments live in the user cache. They contain no model API
 client; the calling agent needs file, image-viewing and command tools. Downloads and
-ASR remain separate capabilities. See [media operator integration](research/media-operator-video-notes.md)
-for the pipeline and [case validation](research/video-notes-case-validation.md) for a tested example.
+ASR remain separate capabilities. Use the [documentation index](docs/README.md) for current designs, integration and dated validation.
 
 ## Install
 
@@ -111,9 +110,13 @@ migration. `uv` and the required system media tools remain prerequisites; first-
 setup and model caching follow each skill's instructions. Download environments currently
 live under the installed skill's `runtime/.venv`; Whisper uses shared uv/model caches.
 The installer excludes environments, bytecode and setup markers from copied skills.
-See [migration provenance and validation](research/media-skills-migration.md).
+Maintenance, provenance and validation are indexed in [docs](docs/README.md).
 
 ## License
 
 `skills/local-whisper/LICENSE` retains its original MIT license. No collection-wide
 license is assigned by this migration; other existing license notices remain unchanged.
+
+## Development
+
+Start with [AGENTS.md](AGENTS.md) and the [documentation index](docs/README.md). Small edits go directly through verification and a PR; larger multi-session changes use specs and self-contained tickets in GitHub Issues. No retrospective issues are created for completed work.

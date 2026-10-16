@@ -1,5 +1,7 @@
 # Faithful lecture mode: correction and P2 regeneration
 
+状态：已执行的历史验收记录（2026-10-16），相关实现已合并；保留当时的测试数量和未验证项，不代表当前平台或新环境已复验。
+
 Date: 2026-10-16. The user found that the condensed note lost too much of the tutorial's original expression and requested fuller transcript-based narration. This supersedes the earlier condensation preference; the original condensed edition remains intact.
 
 ## Changed default
