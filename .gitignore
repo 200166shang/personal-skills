@@ -6,3 +6,6 @@ __pycache__/
 .setup-complete
 .setup-lock/
 *.tgz
+
+# Private local task/handoff scratch; accepted decisions belong in docs.
+.scratch/

@@ -1,5 +1,7 @@
 # Playlist wrapper validation — 2026-10-16
 
+状态：已执行的历史验收记录（2026-10-16），相关实现已合并；保留当时的测试数量和未验证项，不代表当前平台或新环境已复验。
+
 Scope: modify only this Skill and its Python wrapper. Upstream `yt-dlp[default]==2026.8.19` and its source remain unchanged.
 
 - Original tests: 4 pass before extension. New catalog/range tests initially failed because the wrapper only exposed inspect/download and rejected playlists.

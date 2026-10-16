@@ -1,8 +1,10 @@
 # Video notes: P2 validation
 
+状态：已执行的历史验收记录（2026-10-16），相关实现已合并；保留当时的测试数量和未验证项，不代表当前平台或新环境已复验。
+
 Date: 2026-10-16. Source: [STM32 tutorial, P2 — installing the development environment](https://www.bilibili.com/video/BV11X4y1j7si/?p=2).
 
-This record describes the original condensed-note case. The user subsequently requested fuller preservation of the lecture; [the fidelity correction](video-notes-fidelity-correction.md) changes the default and documents a separate faithful edition. The original output remains intact for comparison.
+This record describes the original condensed-note case. The user subsequently requested fuller preservation of the lecture; [the fidelity correction](fidelity.md) changes the default and documents a separate faithful edition. The original output remains intact for comparison.
 
 ## Executed case
 
