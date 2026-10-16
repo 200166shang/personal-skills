@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "description": "Personal Codex skills",
   "bin": {
-    "personal-skills": "bin/install.mjs"
+    "personal-skills": "bin/install.mjs",
+    "personal-video-notes-agent": "bin/install-video-notes-agent.mjs"
   },
   "files": [
     "bin",
     "skills",
+    "agents",
     "README.md",
     "README.zh-CN.md",
     "research/media-operator-video-notes.md",
