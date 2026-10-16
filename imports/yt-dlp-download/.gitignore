@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+skills/yt-dlp-download/runtime/.venv/
+skills/yt-dlp-download/runtime/.setup-complete
+skills/yt-dlp-download/runtime/.setup-lock/
+

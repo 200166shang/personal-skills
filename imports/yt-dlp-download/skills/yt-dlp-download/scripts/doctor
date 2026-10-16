@@ -1,0 +1,24 @@
+#!/bin/sh
+set -eu
+
+skill_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+runtime="$skill_root/runtime"
+missing=""
+
+for command_name in uv ffmpeg ffprobe; do
+  if ! command -v "$command_name" >/dev/null 2>&1; then
+    missing="$missing $command_name"
+  fi
+done
+
+if [ -n "$missing" ]; then
+  printf '{"ok":false,"status":"missing_dependencies","missing":"%s"}\n' "${missing# }"
+  exit 2
+fi
+if [ ! -x "$runtime/.venv/bin/yt-dlp-download" ]; then
+  printf '{"ok":false,"status":"setup_required","runtime":"%s"}\n' "$runtime"
+  exit 3
+fi
+
+printf '{"ok":true,"status":"ready","runtime":"%s"}\n' "$runtime"
+
