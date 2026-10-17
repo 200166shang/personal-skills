@@ -18,6 +18,8 @@ Unchanged inputs can reuse a job. Changed source, mode, normalization or prepara
 
 Authors and independent reviewers execute the [structure and HTML checklist](../../skills/video-notes/references/presentation-review.md): topic subheadings, complete Markdown/HTML correspondence and actual page inspection. Record presentation observations separately from content/image review and disclose unavailable browser checks. Observed presentation defects require repair; browser unavailability alone remains a limitation rather than a claim of tested usability. The CLI continues to enforce structural relationships, not these caller judgments.
 
+The caller resolves unspecified output to a configured Library root (fallback `~/Media/Library`) and can copy completed notes into a requested Obsidian destination using the [delivery procedure](../../skills/video-notes/references/library-and-obsidian.md). Reading copies retain Markdown, HTML, images, SRT and source JSON; shared CSS is preserved and checked. Full evidence stays with the original Library edition. This is Skill instruction behavior, not a new CLI import command. Personal paths remain host configuration.
+
 ## Authoritative runtime references
 
 - [Note Skill](../../skills/video-notes/SKILL.md), [output contract](../../skills/video-notes/references/output-contract.md), [style](../../skills/video-notes/references/note-style.md).
