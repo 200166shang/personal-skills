@@ -16,6 +16,8 @@ A completed writer candidate is snapshotted before independent source/image revi
 
 On resume, preserve known live claims and verify stored evidence. Revoke only a confirmed stopped/lost worker, retaining old attempts and invalidating its token. Publish only a current independent PASS, preserve prior different editions and update a course index that links rather than summarizes each script. Already published lessons can be checked by their delivery hashes after source caches are removed. Failed lessons remain visible while other eligible lessons continue.
 
+After publication, an optional Obsidian copy is owned by the coordinator under the single-lesson [delivery procedure](../../skills/video-notes/references/library-and-obsidian.md). It serializes shared index/style changes and leaves frozen candidates and published hashes intact. CLI init still receives an explicit resolved output path; pending/failed lessons are reported separately from copied published ones.
+
 ## Runtime contracts and evidence
 
 [Batch Skill](../../skills/video-notes-batch/SKILL.md), [manifest/CLI contract](../../skills/video-notes-batch/references/batch-contract.md), [host dispatch](../../skills/video-notes-batch/references/host-dispatch.md), [writer](../../skills/video-notes-batch/references/lesson-worker.md) and [reviewer](../../skills/video-notes-batch/references/lesson-reviewer.md) own detailed fields and commands. Read those when changing the relevant stage instead of duplicating their schemas here.

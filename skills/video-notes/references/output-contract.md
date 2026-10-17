@@ -46,6 +46,8 @@ These times and IDs are illustrative. In `draft.md`, place `<!-- figure:f001 -->
 
 ## Delivery
 
+For default Library placement and an optional selected-file Obsidian copy after acceptance, follow [Library and Obsidian delivery](library-and-obsidian.md). This caller procedure leaves the full validated edition and its reports intact; the reading copy has its own path/link checks and does not inherit stale render hashes. CLI arguments and output contracts below remain unchanged.
+
 `assemble` requires matching source hashes, all windows reviewed, accepted captures and consistent figure IDs. It copies used images, resolves markers to Markdown images/captions/time links, and packages sources and review evidence. Use a delivery directory separate from the work directory. These commands update their own generated outputs; preserve a previous published edition in a different directory when needed.
 
 `render` reads the final Markdown, creates heading anchors/TOC, copies local images if necessary, and writes `note.html`, `assets/note.css` and `render.json`. It rejects remote images, missing files and escaping asset paths. Raw HTML in Markdown is escaped. Local CSS, image zoom and code highlighting work without a server or CDN. Time links to the source need network access.
